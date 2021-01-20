@@ -1,4 +1,4 @@
-STRINGS
+**STRINGS
 
 A string in Python is a sequence of characters. Strings are immutable and hence once defined, the content cannont be modified/changed in any way.
 Example : welcome = : "Hello Python"
@@ -125,7 +125,8 @@ Example : mystring = "0123456789"
 
 
 
-NUMBERS AND BOOLEANS
+**NUMBERS AND BOOLEANS
+
 num1 = 10
 num2 = 2.5
 type(num1)
@@ -215,7 +216,8 @@ True
 
           
 
-LISTS
+**LISTS
+
 Sequence of elements inclosed by [] brackets.
 list1 = []
 type(list1)
@@ -273,4 +275,102 @@ and so on..
 
 
 
-SETS
+**SETS
+
+They are unordered collection of unique elements. They are basically lists without any duplicate elements.
+list4 = [1,2,3,4,2,3,5]
+set(list4)
+{1, 2, 3, 4, 5}
+set1 = set([11,12,13,14,15,15,15,11])
+set1
+{11, 12, 13, 14, 15}
+type(set1)
+<class,'set'>
+len(set1)
+5
+11 in set1
+True
+100 in set1
+False
+set1.add(16)
+set1
+{11, 12, 13, 14, 15, 16}
+set1.remove(11)
+set1
+{12, 13, 14, 15, 16}
+
+set1 = {1, 2, 3, 4}
+set2 = {3, 5, 8}
+set1.intersection(set2)
+{3}
+set1.difference(set2)
+{1, 2, 4}
+set1.union(set2)
+{1, 2, 3, 4, 5, 8}
+set1.pop()
+1
+set1
+{2, 3, 4}
+set1.clear()
+set1
+>> 
+
+list1 = [1, 2, 3, 4]
+list2 = [3, 4, 7]
+fs1 = frozenset(list1)
+fs2 = frozenset(list2)
+
+fs1
+frozenset({1, 2, 3, 4})
+fs2
+frozenset({3, 4, 7})
+type(fs1)
+<class,'frozenset'>
+*You cannot add, subtract, multiply, divide anything in the frozenset
+
+
+
+
+**TUPLES
+
+Tuples are ordered collection of non-unique elements.
+my_tuple = ()
+type(my_tuple)
+<class,'tuple'>
+my_tuple = 9
+typle(my_tuple)
+<class,'int'>
+my_tuple = (9, )
+type(my_tuple)
+<class,'tuple'>
+
+tuple1 = ("Mango", "Banana", "apple")
+(2, 3, 5) = tuple1
+"Mango"
+2
+"Banana"
+3
+"apple"
+5
+
+-> Tuples v/s lists
+1) tuples are immutable; lists are mutable
+2) tuples have fixed length; lists have variable length
+3) tuples (); lists []
+
+tuple2 = (1, 2, 3, 4)
+len(tuple2)
+4
+max(tuple2)
+4
+tuple2 + (5, 6, 7)
+tuple2
+(1, 2, 3, 4, 5, 6, 7)
+tuple2 * 2
+(1, 2, 3, 4, 1, 2, 3, 4)
+del tuple2
+>>
+
+
+
+
