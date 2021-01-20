@@ -374,7 +374,7 @@ del tuple2
 
 
 
-** RANGES
+**RANGES
 
 print range(10)
 [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]     * Don't include 10
@@ -405,3 +405,127 @@ list(r)[2:5]
 
 
 **DICTIONARIES
+
+dict1 = {}
+type(dict1)
+<class,'dict'>
+dict1 = {"apple": "2", "mango": "3", "banana": "4"}
+dict1["apple"]
+'2'
+dict1['mango']
+'3'
+dict1["Kiwi"] = "5"
+dict1
+{"apple": "2", "mango": "3", "banana": "4", "Kiwi": "5"}
+dict1.keys()
+dict_keys(['apple', 'mango', 'banana', 'kiwi'])
+dict.values()
+dict_values(['2', '3', '4', '5'])
+dict1.items()
+dict_items([('apple', '2'), ('mango', '3'), ('banana', '4'), ('kiwi', '5')])
+
+-> Conversion between data types :-
+
+-> int. or float to string
+num = 2
+f = 2.5
+type(num)
+<class,'num'>
+type(f)
+<class,'float'>
+
+num2 = str(num)
+num2
+2
+type(num2)
+<class,'str'>
+
+f2 = str(f)
+f2
+2.5
+type(f2)
+<class,'str'>
+
+-> string to integer
+str = "5"
+type(str)
+<class,'str'>
+str1 = "5"
+type(str1)
+<class,'str'>
+int1 = int(str1)
+int1
+5
+type(int1)
+<class,'int'>
+
+-> string to float
+f3 = float(str1)
+type(f3)
+<class,'float'>
+
+-> integer to float function
+num1 = 2
+num1
+2
+type(num1)
+<class,'int'>
+f = float(num1)
+type(f)
+<class,'float'>
+f
+2.0
+
+-> float to integer
+f1 = int(f)
+f1
+2
+type(f1)
+<class,'int'>
+
+-> tuple to list
+tup1 = (1, 2, 3)
+type(tup1)
+<class,'tuple'>
+list1 = list(tup1)
+type(list1)
+<class,'list'>
+
+-> list to tuple
+list1
+[1, 2, 3]
+tup = tuple(list1)
+tup
+(1,2,3)
+
+-> list to set
+list1
+[1, 2, 3]
+
+list1 = set(list1)
+type(set1)
+<class,'set'>
+
+-> num to binary
+num = 10
+num_bin = bin(num)
+num_bin
+'0b1010'
+
+-> num to hexadecimal
+num = 10
+num_hex = hex(num)
+num_hex
+'0xa'
+
+-> binary and hex to decimal notation
+bin_to_num = int(num_bin, 2)
+bin_to_num
+10
+
+hex_to_num = int(num_hex, 16)
+hex_to_num
+10
+
+
+
