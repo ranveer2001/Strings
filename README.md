@@ -125,4 +125,92 @@ Example : mystring = "0123456789"
 
 
 
+NUMBERS AND BOOLEANS
+num1 = 10
+num2 = 2.5
+type(num1)
+<class,'int'>
+type(num2)
+<class,'float'>
+2 - 1
+1
+5 / 2
+2.5
+5 // 2 (divide to nearest whole number)
+2
+4 * 2
+8
+4 ** 2 (** is power function where 4 is base and 2 power)
+16
+5 == 5 (equalities)
+True
+5 != 4 (not equal to)
+True
+-> Priority while solving an equation :-
+1) raising to a power
+2) multiplication, divison, remainder, mosulus
+3) Addition, subtraction
+Example : 100 - 5 ** 2 / 5 * 2 (when same priority go from left to right)
+          100 - 25 / 5 * 2
+          100 - 5 * 2
+          100 - 10
+          90
+    
+int(1.7)
+1
+float(2)
+2.0
+abs(5)
+5
+abs(-5)
+5
+max(1,2)
+2
+min(1,2)
+1
+pow(3,2)
+9
+
+1 == 1
+True
+1 == 2
+False
+-> Logical expression :-
+1) and - both expressions should be true
+2) or - one of the expression should be true
+3) not - negating an expression
+
+Example : (1 == 1) and (2 == 2)
+          T and T
+          T
+          (1 == 2) and (3 == 2)
+          F and F
+          F
+          1 == 1 or 2 == 2
+          T or T
+          T
+          1 == 1 or 2 ==3
+          T or F
+          T
+          not(1 == 1)
+          not(T)
+          F
+          not(1 == 2)
+          not(F)
+          T
+bool functions evaluate functions as true or false
+bool(None)
+False
+bool(0)
+False
+bool(' ')
+False
+bool(1)
+True
+bool(2.2)
+True
+bool([3])
+True
+
+
           
