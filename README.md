@@ -214,3 +214,63 @@ True
 
 
           
+
+LISTS
+Sequence of elements inclosed by [] brackets.
+list1 = []
+type(list1)
+<class,'list'>
+list 1 = ["apple", "kiwi", "orange", 2, 5.5, -8]
+len(list1)
+6
+list1[0]
+apple
+list1[-1]
+-8
+list 1 = ["apple", "kiwi", "orange", 2, 5.5, -8]
+list1[2] = "banana
+list1
+list1 = ["apple", "kiwi", "banana", 2, 5.5, -8]
+
+list2 = [ 3, 5, -8]
+min(list2)
+-8
+max(list2)
+5
+
+list 1 = ["apple", "kiwi", "orange", 2, 5.5, -8]
+list1.append(100)
+list1
+["apple", "kiwi", "orange", 2, 5.5, -8, 100]
+del list1[4]
+list1
+list 1 = ["apple", "kiwi", "orange", 2, -8, 100]
+list1.pop(0)
+list1
+["kiwi", "orange", 2, -8, 100]
+list1.remove("orange")
+list1
+["kiwi", 2, -8, 100]
+list1.insert(2, "mango")
+list1
+["kiwi", 2, mango, -8, 100]
+list2 = [2, 22, 222]
+list1.extend(list2)
+list1
+["kiwi", 2, mango, -8, 100, 2, 22, 222]
+list3 = [3, 5, 7, 29, 1, 2]
+list3.sort() (sort in ascending order)
+list3
+[1, 2, 3, 5, 7, 29]
+list3.reverse() (sort in descending order but only after first sorting in ascending order)
+[29,7,5,3,2,1]
+
+list4 = [1, 2, 3, 'a', 'b', 'c']
+list4[0:3]
+[1,2,3]
+and so on..
+
+
+
+
+SETS
