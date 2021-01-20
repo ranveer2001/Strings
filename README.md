@@ -374,3 +374,34 @@ del tuple2
 
 
 
+** RANGES
+
+print range(10)
+[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]     * Don't include 10
+print range(5,10)
+[5, 6, 7, 8, 9]
+
+r = range(10)
+r
+range(0,10)
+type(r)
+<class,'range'>
+list(r)
+[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+r[0]
+0
+r[-1]
+9
+7 in r
+True
+22 in r
+false
+r.index(4)
+4
+list(r)[2:5]
+[2, 3, 4]
+
+
+
+
+**DICTIONARIES
