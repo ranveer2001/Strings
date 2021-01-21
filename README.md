@@ -568,3 +568,11 @@ def my_first_function(x):   (Here x is the parameter, used while defining a func
                        200
                        
 
+
+
+**IMPORTING
+
+from my_module import my_var
+print("this is my app")
+print(my_var)
+my_function()
