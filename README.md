@@ -530,7 +530,41 @@ hex_to_num
 
 
 
+**TYPES OF ERRORS IN PYTHON
+
+1) Syntax Error
+2) Exceptions
 
 
 
+**FUNCTIONS
+
+-> def function_name ():
+
+def my_first_function(x):   (Here x is the parameter, used while defining a function)
+    "This is my first function!"
+    print(x)
+     
+    my_first_function("Hello Python!"). (Here Hello Python is the arguement, used while calling a function)
+>>> Hello Python
+
+**NAMESPACES
+
+1) Built-in Namespaces -> print(list(range(10)))
+                          [0,1,2,3,4,5,6,7,8,9]
+                       
+2) Global Namespaces -> my_var = 10
+                        print(my_var)
+                        10
+                        
+3) local Namespaces -> def my_var_func() :
+                            my_var = 10
+                            print(my_var)
+                         
+                       my_var_func()
+                       my_var = 20
+                       print(my_var * 20)
+                       10
+                       200
+                       
 
