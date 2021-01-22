@@ -606,3 +606,32 @@ with open("newfile.txt",'w') as f:
 f.closed
 True
      
+
+
+
+**REGULAR EXPRESSIONS
+
+A regular expression is represented by a special syntax that helps you match and find a pattern.
+Example **in the python code under regex-search( ) heading.
+
+In regular expression :
+1) . represents any character except a new line character.
+2) + represents that previous expression may repeat one or more times.
+3) * represents that previous expression may repeat zero or more times.
+4) ? represnts matching as minimal expressions as possible.
+5) \d represents any decimal digit.
+6) \w represnts letter (a-z, A-Z), numbers(0-9), underscore(_).
+7) \s represents any white space character.
+8) {2,} this means that python should expect 2 or more occurances of the pattern preeceding the curly braces.
+9)    + or space before a plus sign after the parenthesis means that we want to indicate to python that we intend to match a group until a space is encountered.
+10) \. means character escaping.
+11) \D represents any non-digit character in the string. (*D+/S+/W+ for one or more repititions.)
+12) \S represents all non-white space characters.
+13) \W represents all non-word charcaters.(no letter, numbers, underscore)
+14) [a-z] finds all lower case characters in the string.
+15) [^a] represents all characters in the string except a.
+16) A|B represents two different patterns tried from left to right. When one pattern matches inside the string, the other is no longer in use.
+
+
+
+
