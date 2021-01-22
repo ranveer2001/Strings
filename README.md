@@ -576,3 +576,33 @@ from my_module import my_var
 print("this is my app")
 print(my_var)
 my_function()
+
+
+
+
+**OPEN A FILE
+
+myfile = open("D:\\routers.txt", 'r')
+
+r -> reading
+w -> writing
+a -> appending
+b -> binary
+x -> exclusive creation
+
+-> Additional way of avoiding unicode error
+f = open(r"D:\Users\teodo\file1.py",'w')
+r here is **raw string literal
+\U and \t are treated as normal characters due to the use of r which avoids the unicode error.
+
+Unicode Error : Typical error on Windows because the default user directory is C:\user\<your_user> , so when you want to use this path as an string parameter into a Python function, you get a Unicode error, just because the \u is a Unicode escape. Any character not numeric after this produces an error.
+
+Using w+ , will open a file for reading and writing at the same time and if the file does not exist, it will create it.
+
+-> For writing and then close a file on it's own :
+with open("newfile.txt",'w') as f:
+     f.write("Hello Python!!!")
+     
+f.closed
+True
+     
