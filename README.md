@@ -1,3 +1,6 @@
+**PYTHON COMPLETE MASTERCLASS FOR BEGINNERS**
+
+
 **STRINGS
 
 A string in Python is a sequence of characters. Strings are immutable and hence once defined, the content cannont be modified/changed in any way.
@@ -632,6 +635,24 @@ In regular expression :
 15) [^a] represents all characters in the string except a.
 16) A|B represents two different patterns tried from left to right. When one pattern matches inside the string, the other is no longer in use.
 
+
+
+
+**Lambda function
+
+lambda arg1, arg2 ..., ..., arg n: an expression using the arguements
+
+**Iterators
+
+Iterator is an object which allows a programmer to go through all the elements of a collection sequence regardless of its specific implementation.
+iter()
+
+Generator is a special routine that can be used to control the iteration behaviour of a loop.
+It yields the value one at a time, unlike function.
+
+1) chain() takes several sequences as arguements and chains them together.
+2) count() returns an iterator that generates consecutive integers until you stop it,
+3) cycle() returns an iterator that simply repeats the value given as an arguement infinitely.
 
 
 
