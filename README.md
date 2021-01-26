@@ -657,6 +657,23 @@ It yields the value one at a time, unlike function.
 
 
 
+**2D NUMPY ARRAYS
+
+np_2d = np.array([[1.73, 1.68, 1.71, 1.89, 1.79], [56.5, 76.5, 98.3, 35.76,67.5]])
+np_2d
+
+array([[1.73, 1.68, 1.71, 1.89, 1.79],
+       [56.5, 76.5, 98.3, 35.76,67.5]])
+
+np_2d.shape
+(2, 5) #2 rows, 5 columns
+
+np_2d[0][2] or np_2d[0,2]
+means 1st row, 3rd element
+=> 1.71
+
+
+
 
 
 
