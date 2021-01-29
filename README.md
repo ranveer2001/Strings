@@ -835,4 +835,85 @@ dogs.loc["2014" : "2016"]
 **HISTOGRAMS
 
 import matplotlib as plt
-dog_pack["height_cm"]
+dog_pack["height_cm"].hist()
+plt.show()
+
+#Adjust bins
+dog_pack["height_cm"].hist(bins = 20)
+plt.show
+
+#Bar plots
+avg_weight_by_breed = dog_pack.groupby("breed")["weight_kg"].mean()
+
+avg_weight_by_breed.plt(kind = "bar")
+plt.show()
+
+avg_weight_by_breed.plt(kind = "bar", title = "Mean weight by dog breed")
+plt.show()
+
+#Line plots
+sully.head()
+sully.plot(x = "date", y = "weight_kg", kind = "line")
+plt.show()
+
+#Rotating axis labels
+sully.plot(x = "date", y = "weight_kg", kind = "line", rot = 45)
+plt.show()
+
+#Scatter Plots
+dog_pack.plot(x = "height_cm", y = "weight_kg", kind = "scatter")
+plt.show()
+
+#Layering Plots
+dog_pack[dog_pack["sex"]=="F"]["height_cm"].hist()
+dog_pack[dog_pack["sex"]=="M"]["height_cm"].hist()
+plt.show()
+
+#Add a legend
+dog_pack[dog_pack["sex"]=="F"]["height_cm"].hist()
+dog_pack[dog_pack["sex"]=="M"]["height_cm"].hist()
+plt.legend(["F", "M"])
+plt.show()
+
+#Transparency
+dog_pack[dog_pack["sex"]=="F"]["height_cm"].hist(alpha = 0.7)
+dog_pack[dog_pack["sex"]=="M"]["height_cm"].hist(alpha = 0.7)
+plt.legend(["F", "M"])
+plt.show()
+
+#Detecting missing values
+dogs.isna()
+
+#Detecting any missing values in any columns
+dogs.isna().any()
+
+#Counting missing values
+dogs.isna().sum()
+
+#Plotting missing values
+import matplotlib as plt
+dogs.isna().sum().plot(kind = "bar")
+plt.show()
+
+#Removing missing values
+dogs.dropna()
+
+#Replacing missing values
+dogs.fillna(0)
+
+#Creating data frames from list of dictionaries by row
+new_dogs = pd.DataFrame(list_of_dicts)
+print(new_dogs)
+
+#Creating data frames from dict of list by columns
+new_dogs = pd.DataFrame(dict_of_list)
+print(new_dogs)
+
+*CSV = comma-separated values
+
+#Data Frame manipulation
+new_dogs["bmi"] = new_dogs["weight_kg"] / (new_dogs["height_cm"]/100) ** 2
+print(new_dogs)
+
+#Data Frame to CSV
+new_dogs.to_csv("new_dogs_with_bmi.csv")
