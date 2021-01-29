@@ -713,5 +713,61 @@ bmi_lt_100_height[["name", "height_cm", "bmi"]]
 
 
 
+#Summarizing Statistics
+dogs["height_cm"].mean()    (.median(), .mode(), .min(), .max(), .var(), .std(), .sum(), .quantile())
+
+The .agg() method  
+def pct30(column):  (pct30 computes the 30th percentile of a data frame column)
+    return column.quantile(0.3)
+    
+dogs["weight_kg"].agg(pct30) -> gives 30th percentile of the dogs weight
+dogs[["weight_kg", "height_cm]].agg(pct30)
+
+def pct40(column):  (pct40 computes the 40th percentile of a data frame column)
+    return column.quantile(0.4)
+    
+dogs["weight_kg"].agg([pct30, pct40])
+
+dogs["weight_kg"].cumsum() : gives cummulative sum also : (.cummax(), .cummin(), .cumprod())
+
+#Counting
+
+Dropping duplicate names : vet_visits.drop_duplicates(subset = "name")
+Dropping duplicate pairs : unique_dogs = vet_visits.drop_duplicates(subset = ["name", "breed"])
+                           print(unique_dogs)
+                            
+#Sorting while Counting
+unique_dogs["breed"].value_counts()
+unique_dogs["breed"].value_counts(sort = True)
+
+#To turn counts into proportions
+unique_dogs["breed"].value_counts(normalize = True)
+
+#Summaries by group
+dogs[dogs["color"] == "Black"]["weight_kg"].mean()
+dogs[dogs["color"] == "Brown"]["weight_kg"].mean()
+
+-> Grouped summaries :
+dogs.groupby("color")["weight_kg].mean()
+
+-> Multiple grouped summaries :
+dogs.groupby("color")[weight_kg].agg([min, max, sum])
+
+-> Grouping by multiple variables :
+dogs.groupby(["color", "breed"])["weight_kg"].mean()
+
+-> Many groups, many summaries :
+dogs.groupby(["color", "breed"])[["weight_kg","height_cm" ].mean()
+
+#Grouping by pivot table
+dogs.pivot_table(values = "weight_kg", index = "color")
+
+-> Multiple statistics :
+dogs.pivot_table(values = "weight_kg", index = "color", aggfunc=[np.mean, np.median])
+
+-> For two variables :
+dogs.pivot_table(values= "weight_kg", index = "color", columns = "breed", fill_value = 0, margins = True) #fill_value = 0 puts 0 in place of missing data 
+#Margins puts mean of all the values in the last row or column
+
 
 
