@@ -675,6 +675,43 @@ means 1st row, 3rd element
 
 
 
+**PANDAS
+
+In Pandas, rectangular data is represnted as data frame.
+.head() returns first few rows of a data frame.
+.info() returns names of columns and data types they contain.
+.shape returns no.of rows followed by no. of columns.
+.describe() contains numerical statistics like mean, median etc.
+.values contain data values in a 2 dimensional numpy array.
+.columns contain column names.
+.index contains row no. or row names.
+
+#Sorting
+.sort_values(" ") : change the order of the rows by sorting them.
+.sort_values([" ", " "]) : sort multiple varibales.
+.sort_values([" ", " "], ascending=[True, False]) : sorting variables in ascending order.
+["name"] : will just look at name column.
+[[" ", " "]] : to select multiple columns.
+dogs[" "] > 50 : subsetting rows.  (will get data type : bool)
+dogs[dogs[" "] > 50] (will get list of all dogs greater than 50 cm)
+dogs[dogs[" "] == " "] : subsetting rows on text data.
+dogs[dogs[" "] > "2015-01-20"] : subsetting based on dates.
+is_lab = dogs["breed"] == "Labrador"
+is_brown = dogs["color"] == "Brown"
+dogs[is_lab & is_brown] : subsetting based on multiple conditions.
+is_black_or_brown = dogs["color"].isin(["Black","Brown")]
+dogs[is_black_or_brown]
+
+#Adding a new column
+dogs["height_m"] = dogs["height_cm"] / 100
+print(dogs)
+
+bmi_lt_100 = dogs[dogs["bmi"] < 100]
+bmi_lt_100_height = bmi_lt_100.sort_values("height_cm", ascending = False)
+bmi_lt_100_height[["name", "height_cm", "bmi"]]
+
+
+
 
 
 
