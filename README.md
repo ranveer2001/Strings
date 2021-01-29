@@ -771,3 +771,68 @@ dogs.pivot_table(values= "weight_kg", index = "color", columns = "breed", fill_v
 
 
 
+
+**Setting a column as the index
+
+dogs_ind = dogs.set_index("name")
+print(dogs_ind)
+
+#Removing an index
+dogs_ind.reset_index()
+
+#Dropping an index
+dogs_ind.reset_index(drop = True)
+
+#Indexes make subsetting easier 
+Earlier : dogs[dogs["name"].isin(["Bella", "Stella"])]
+Now : dogs_ind.loc[["Bella", "Stella"]]
+
+#Index values don't need to be unique
+dogs_ind2 = dogs.set_index("breed")
+print(dogs_ind2)
+
+#Subsetting on duplicated index values
+dogs_ind2.loc["Labrador"]
+
+#Multi-level indexes
+dogs_ind3 = dogs.set_index(["breed", "color"])
+print(dogs_ind3)
+
+#Subset the outer level with a list
+dogs_ind3.loc[["Labrador", "Chihuahua"]]
+
+#Subset inner levels with a list of tupels
+dogs_ind3.loc[[("Labrador", "Brown"), ("Chihuahua", "Tan")]]
+
+#Sorting by index values
+dogs_ind3.sort_index()
+
+#Control sort_index
+dogs_ind3.sort_index(level = ["color", "breed"], ascending= [True, False])
+
+#Slicing the outer level index
+dogs_srt.loc["Chow Chow" : "Poddle"] (final value poddle is included)
+
+*Slicing doesn't work on inner level index
+
+#Slicing the inner levels correctly
+dogs_srt.loc[("Labrador", "Brown") : ("Schnauzer" , "Grey")]
+
+#Slicing columns
+dogs_srt.loc[;, "name" : "height_cm"]
+
+#Slice twice
+dogs_srt.loc[("Labrador", "Brown") : ("Schnauzer" , "Grey"), "name": "height_cm"]
+
+#Slicing by dates
+dogs.loc["2014-08-25" : "2016-09-16"]
+
+"Slicing by partial dates"
+dogs.loc["2014" : "2016"]
+
+
+
+**HISTOGRAMS
+
+import matplotlib as plt
+dog_pack["height_cm"]
