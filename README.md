@@ -917,3 +917,62 @@ print(new_dogs)
 
 #Data Frame to CSV
 new_dogs.to_csv("new_dogs_with_bmi.csv")
+
+
+
+
+**MERGING TABLES
+
+#Inner Join
+wards_census = wards.census(census, on = 'ward')
+print(wards_census.head(4))
+
+#Controlling suffixes
+wards_census = wards.census(census, on = 'ward', suffixes = ('_ward', '_cen')) #Data on left column will be given suffixes _ward and on the right column _cen.
+print(ward_census.head())
+print(ward_census.shape)
+
+One-to-One : Every row in the left table is realted to only one row in the right table.
+One-to-many : Every row in the left table is related to one or many rows in the right table.
+
+Single merge : grants.merge(licenses, on =['address', 'zip'])
+Merging Multiple tables : grants.merge(licenses, on =['address', 'zip'])\.merge(wards, on='ward', suffixes=('_bus', '_ward'))
+Three tables : df1.merge(df2, on='col') \.merge(df3, on='col')
+
+#Merge with left join
+movies_taglines = movies.merge(taglines, on='id', how = 'left')
+print(movies_taglines.head())
+
+#Merge with right join
+tv_movies = movies.merge(tv_merge, how = 'right', left_on='id', right_on='movie_id')
+print(tv_movies.head())
+
+#Merge with outer join
+family_comedy = family.merge(comedy, on='movie_id', how='outer', suffixes = ('_fam', '_com')
+print(family_comedy)
+
+#Merging a table with itself
+original_sequels = sequels.merge(sequels, left_on='sequel', right_on='id', suffixes=('_org', '_seq))
+print(original_sequels.head())
+
+#Continue format results
+print(original_sequels[['title_org','title_seq']].head()
+
+#Merging itself with left join
+original_sequels = sequels.merge(sequels, left_on='sequel', right_on='id', how='left', suffixes=('_org', '_seq))
+print(original_sequels.head())
+
+#Setting an index
+movies = pd.read_csv('tmdb_movies.csv', index_col=['id'])
+print(movies.head())
+
+#Merging on index
+movies_taglines = movies.merge(taglines, on='id', how='left')
+print(movies_taglines.head())
+
+#Multi-index merge
+samuel_casts = samuel.merge(casts, on=['movie_id', 'cast_id']
+
+#Index merge with left_on and right_on
+movies_genres = movies.merge(movies_to_genres, left_on='id', left_index=True, right_on='movie_id', right_index=True)
+
