@@ -976,3 +976,124 @@ samuel_casts = samuel.merge(casts, on=['movie_id', 'cast_id']
 #Index merge with left_on and right_on
 movies_genres = movies.merge(movies_to_genres, left_on='id', left_index=True, right_on='movie_id', right_index=True)
 
+
+
+
+**INTRODUCTION TO DATA VISUALIZATION USING MATLPOTLIB
+
+import matlplotlib.pyplot as plt
+fig, ax = plt.subplots()
+plt.show()
+
+#Adding data to axes
+seattle_weather["MONTH"]
+seattle_weather["MTLY-NORMAL"]
+
+ax.plot(seattle_weather["MONTH"], seattle_weather["MTLY-NORMAL"])
+plt.show()
+
+#Adding markers
+ax.plot(seattle_weather["MONTH"], seattle_weather["MTLY-NORMAL"], marker="o") (markers are rounded)
+plt.show()
+
+ax.plot(seattle_weather["MONTH"], seattle_weather["MTLY-NORMAL"], marker="v") (markers shaped like triangles)
+plt.show()
+
+#Setting the linestyle
+ax.plot(seattle_weather["MONTH"], seattle_weather["MTLY-NORMAL"], marker="v", linestyle="--") (change appearance of line to dashed line)
+plt.show()
+
+ax.plot(seattle_weather["MONTH"], seattle_weather["MTLY-NORMAL"], marker="v", linestyle="None") (eliminating lines completely)
+plt.show()
+
+#Choosing color of data
+ax.plot(seattle_weather["MONTH"], seattle_weather["MTLY-NORMAL"], marker="v", linestyle="--", color="r")
+plt.show
+
+#Customizing the axes labels
+ax.set_xlabel("Time(months)")
+plt.show()
+
+#Setting the y label
+ax.set_xlabel("Time(months)")
+ax.set_ylabel("Average Temperature(Celcius degrees)")
+plt.show()
+
+#Adding a title
+ax.set_title("Weather in Seattle")
+plt.show
+
+#Adding perecntile
+ax.plot(seattle_weather["MONTH"], seattle_weather["MTLY-NORMAL-25PCTL"], marker="v", linestyle="--") 
+plt.show()
+
+#Small multiples with plt.subplots
+fig, ax = subplots()
+fig, ax = subplots(3,2) (3 rows and 2 columns)
+plt.show()
+
+ax[0].plot(seattle_weather["MONTH"], seattle_weather["MTLY-NORMAL-25PCTL"], marker="v", linestyle="--") )
+
+#Sharing the y-axis range
+fig, ax = plt.subplots(2,1, sharey=True) (Means both plos will have same rang of y values)
+
+#Plotting Time-Series data
+import matplotlib.pyplot as plt
+fig,ax = subplots()
+ax.plot(climate_change.index, climate_change['co2']
+
+ax.set_ylabel('CO2(ppm)')
+plt.show()
+
+#Zooming in on a decade
+sixties = climate_change["1960-01-01:"1969-12-31"]
+ax.plot(sixties.index, sixties['co2']
+ax.set_xlabel('Time')
+ax.set_ylabel('CO2(ppm)')
+plt.show()
+
+#Plotting two time-series together
+import matplotlib.pyplot as plt
+fig,ax = subplots()
+ax.plot(climate_change.index, climate_change['co2']
+ax.plot(climate_change.index, climate_change['relative_temp']
+ax.set_xlabel('Time')
+ax.set_ylabel('CO2(ppm)/ Relative temperature')
+
+#Using twin axes
+fig,ax = subplots()
+ax.plot(climate_change.index, climate_change["co2"])
+ax.set_xlabel('Time')
+ax.set_ylabel('CO2(ppm)')
+ax2 = ax.twinx() (both have same x axis, but different y axis)
+ax.plot(climate_change.index, climate_change['relative_temp'])
+ax.set_ylabel('CO2(ppm)/ Relative temperature(Celsius)')
+
+#Separating variables by color
+fig,ax = subplots()
+ax.plot(climate_change.index, climate_change["co2"], color="blue")
+ax.set_xlabel('Time')
+ax.set_ylabel('CO2(ppm)', color="blue")
+ax2 = ax.twinx() (both have same x axis, but different y axis)
+ax.plot(climate_change.index, climate_change['relative_temp'], color="red")
+ax.set_ylabel('CO2(ppm)/ Relative temperature(Celsius)', color="red")
+
+#Coloring the ticks
+ax.tick_params('y', colors="blue")
+
+#A function that plots time-series
+def plot_timeseries(axes, x, y, color, xlabel, ylabel)
+axes.plot(x, y, color=color)
+axes.set_xlabel(xlabel)
+axes.set_ylabel(ylabel, color=color)
+axes.tick_params('y', colors=colors)
+
+#Annotation
+ax2.annotate(">1 degree", xy=[pd.TimeStamp("2015-10-06"),1])
+
+#Positioning the annotated text
+ax2.annotate(">1 degree", xy=(pd.TimeStamp("2015-10-06"),1), xytext=(pd.Timestamp('2008-10-06'),-0.2), arrowprops={})
+
+#Customize arrow properties
+ax2.annotate(">1 degree", xy=(pd.TimeStamp("2015-10-06"),1), xytext=(pd.Timestamp('2008-10-06'),-0.2), arrowprops={"arrowstyle":"->", "color":"gray"})
+
