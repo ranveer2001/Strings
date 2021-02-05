@@ -1335,3 +1335,64 @@ import seaborn as sns
 sns.relplot(x="hour", y="NO_2", data=air_df_mean, kind="line", ci="sd")
 plt.show()
 
+#catplot()
+-> catplot() is used to create categorical plots.
+-> Same advantages of relplot()
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+sns.catplot(x="how_masculine", data=masculinity_data, kind="count")
+plt.show()
+
+*Changing the order
+import matplotlib.pyplot as plt
+import seaborn as sns
+Category_order = ["No answer", "Not at all", "Some what"]
+sns.catplot(x="how_masculine", data=masculinity_data, kind="count", order=category_order)
+plt.show()
+
+*Bar plots using catplots
+import matplotlib.pyplot as plt
+import seaborn as sns
+sns.catplot(x="day", y="total_bill", data=tips, kind="bar")
+plt.show()
+
+*Turning off confidence intervals
+import matplotlib.pyplot as plt
+import seaborn as sns
+sns.catplot(x="day", y="total_bill", data=tips, kind="bar", ci=None)
+plt.show()
+
+#BOX PLOTS
+import matplotlib.pyplot as plt
+import seaborn as sns
+g = sns.catplot(x="time", y="total_bill", data=tips, kind="box")
+plt.show()
+
+*Changing the whiskers using whis
+import matplotlib.pyplot as plt
+import seaborn as sns
+g = sns.catplot(x="time", y="total_bill", data=tips, kind="box", whis=[0, 100])
+plt.show()
+
+#POINT PLOTS
+import matplotlib.pyplot as plt
+import seaborn as sns
+sns.catplot(x="age", y="masculinity_important", data=masculinity_data, hue="feel_masculine", kind="point")
+plt.show()
+
+*Disconnecting the points
+import matplotlib.pyplot as plt
+import seaborn as sns
+sns.catplot(x="age", y="masculinity_important", data=masculinity_data, hue="feel_masculine", kind="point", join=False)
+plt.show()
+
+*Displaying median
+import matplotlib.pyplot as plt
+import seaborn as sns
+from numpy import median
+sns.catplot(x="smoker", y="total_bill", data=tips, kind="point", estimator=median)
+plt.show()
+
+*Customizing the confidence intervals
+capsize=0.2 etc
