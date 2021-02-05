@@ -1097,3 +1097,120 @@ ax2.annotate(">1 degree", xy=(pd.TimeStamp("2015-10-06"),1), xytext=(pd.Timestam
 #Customize arrow properties
 ax2.annotate(">1 degree", xy=(pd.TimeStamp("2015-10-06"),1), xytext=(pd.Timestamp('2008-10-06'),-0.2), arrowprops={"arrowstyle":"->", "color":"gray"})
 
+
+#BAR CHARTS
+medals = pd.read_csv('medals_by_country_2016.csv', index_col=0)
+fig,ax = subplots()
+ax.bar(medals.index, medals["Gold"])
+plt.show()
+
+#Rotate the tick labels
+fig, ax = plt.subplots()
+ax.bar(medals.index, medals["Gold"])
+ax.set_xticklabels(medals.index, rotation=90)
+ax.set_ylabel("Number of medals")
+plt.show()
+
+#Stacking data on top of the other
+fig, ax = plt.subplots()
+ax.bar(medals.index, medals["Gold"])
+ax.bar(medals.index, medals["Silver"], bottom = medals["Gold"])
+ax.set_xticklabels(medals.index, rotation=90)
+ax.set_ylabel("Number of medals")
+plt.show()
+
+#For three medals
+fig, ax = plt.subplots()
+ax.bar(medals.index, medals["Gold"])
+ax.bar(medals.index, medals["Silver"], bottom = medals["Gold"])
+ax.bar(medals.index, medals["Bronze"], medals["Gold"] + medals["Silver"])
+ax.set_xticklabels(medals.index, rotation=90)
+ax.set_ylabel("Number of medals")
+plt.show()
+
+#Adding a legend
+fig, ax = plt.subplots()
+ax.bar(medals.index, medals["Gold"], label = "Gold")
+ax.bar(medals.index, medals["Silver"], bottom = medals["Gold"], label = "Silver")
+ax.bar(medals.index, medals["Bronze"], medals["Gold"] + medals["Silver"], label = "Bronze")
+ax.set_xticklabels(medals.index, rotation=90)
+ax.set_ylabel("Number of medals")
+ax.legend
+plt.show()
+
+
+#HISTOGRAMS
+fig, ax = plt.subplots()
+ax.hist(mens_rowing["Height"])
+ax.hist(mens_gymnastic["Height"])
+ax.set_xlabel("Height(cm)")
+ax.set_ylabel("# of observations)
+plt.show()
+
+#Adding labels and bins
+fig, ax = plt.subplots()
+ax.hist(mens_rowing["Height"], label = "Rowing", bins = 5)
+ax.hist(mens_gymnastic["Height"], label = "Gymnastics", bins = 5)
+ax.set_xlabel("Height(cm)")
+ax.set_ylabel("# of observations)
+plt.show()
+
+#Setting bin boundaries
+fig, ax = plt.subplots()
+ax.hist(mens_rowing["Height"], label = "Rowing", bins = [150, 160, 170, 180, 190, 200, 210])
+ax.hist(mens_gymnastic["Height"], label = "Gymnastics", bins = [150, 160, 170, 180, 190, 200, 210])
+ax.set_xlabel("Height(cm)")
+ax.set_ylabel("# of observations)
+plt.show()
+
+#Change solid bars of histogram to thin lines(transparency)
+fig, ax = plt.subplots()
+ax.hist(mens_rowing["Height"], label = "Rowing", bins = [150, 160, 170, 180, 190, 200, 210], histtype = "step")
+ax.hist(mens_gymnastic["Height"], label = "Gymnastics", bins = [150, 160, 170, 180, 190, 200, 210], histtyoe = "step")
+ax.set_xlabel("Height(cm)")
+ax.set_ylabel("# of observations)
+plt.show()
+
+#Statistical plotting
+fig, ax = plt.subplots()
+ax.hist("Rowing", mens_rowing["Height"].mean(), yerr= mens_rowing["Height"].std())
+ax.hist("Gymnastics", mens_rowing["Height"].mean(), yerr= mens_rowing["Height"].std())
+ax.set_ylabel("Height(cm)")
+plt.show()
+
+#Adding boxplots
+fig, ax = plt.subplots()
+ax.boxplot([mens_rowing["Height"], mens_gymnastics["Height"])
+ax.set_xticklabels(["Rowing", "Gymnastics"])
+ax.set_ylabel("Height(cm)")
+plt.show()
+
+
+#SCATTER PLOTS
+fig, ax = subplots()
+ax.scatter(climate_change["co2"], climate_change["relative_temp"])
+ax.set_xlabel("CO2(ppm)")
+ax.set_ylabel("Relative temp.(celsius)")
+plt.show()
+
+#Changing style of a plot
+plt.style.use("ggplot")
+
+#Back to the default
+plt.style.use("default")
+
+#The bmh style
+plt.style.use("bmh")
+
+#Seaborn styles
+plt.style.use("seaborn-colorblind")
+
+#Saving the figure to file
+fig.savefig("gold_medals.png")
+
+#Resolution
+fig.savefig("gold_medals.png", dpi = 300)
+
+#Size
+fig.set_size_inches([5,3])
+
