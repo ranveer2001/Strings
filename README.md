@@ -1396,3 +1396,31 @@ plt.show()
 
 *Customizing the confidence intervals
 capsize=0.2 etc
+
+
+#Changing Plot styles and color
+
+*Figure style: "Whitegrid"
+sns.set_style("whitegrid")
+import matplotlib.pyplot as plt
+import seaborn as sns
+sns.catplot(x="age", y="masculinity_important", data=masculinity_data, hue="feel_masculine", kind="point")
+plt.show()
+
+*Other Styles
+sns.set_style("ticks")
+sns.set_style("dark")
+sns.set_style("darkgrid")
+
+*Figure "palette" changes the color of the main elements of the plot
+sns.set_palette()
+
+*Diverging palette
+sns.set_palette("RdBu")
+
+*Custom palettes
+custom_palette = ["red", "green", "orange", "blue", "yellow", "purple"]
+sns.set_palette(custom_palette)
+
+*Enlarged context
+sns.set_context("talk")
