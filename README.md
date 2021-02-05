@@ -840,7 +840,7 @@ plt.show()
 
 #Adjust bins
 dog_pack["height_cm"].hist(bins = 20)
-plt.show
+plt.show()
 
 #Bar plots
 avg_weight_by_breed = dog_pack.groupby("breed")["weight_kg"].mean()
@@ -1213,4 +1213,125 @@ fig.savefig("gold_medals.png", dpi = 300)
 
 #Size
 fig.set_size_inches([5,3])
+
+
+
+
+**INTRODUCTION TO SEABORN
+
+Seaborn : Python data visualization library; easily creates most common types of plots.
+          Works well with pandas data structures.
+          Built on top of Matplotlib.
+          
+import seaborn as sns (sns = Samuel Norman Seaborn)
+import matplotlib.pyplot as plt
+height = [77, 78, 89, 90, 91, 99]
+weight = [120, 130, 135, 168, 189, 190]
+sns.scatterplot(x=height, y=weight) (scatterplot)
+plt.show()
+
+#Create a count plot
+sns.countplot(x = gender)
+plt.show()
+
+#Using pandas with Seaborn
+import pandas as pd
+df = pd.read_csv("masculinity.csv")
+df.head()
+
+#Using data frames with countplot()
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+df = pd.read_csv("masculinity.csv")
+sns.countplot(x="how_masculine", data=df)
+plt.show()
+
+#A scatter plot with hue
+import matplotlib.pyplot as plt
+import seaborn as sns
+sns.scatterplot(x="total_bill", y="tip", data=tips, hue="smoker")
+plt.show()
+
+#Setting hue order
+import matplotlib.pyplot as plt
+import seaborn as sns
+sns.scatterplot(x="total_bill", y="tip", data=tips, hue="smoker", hue_order =["Yes", "No"])
+plt.show()
+
+#Specifying hue colors
+import matplotlib.pyplot as plt
+import seaborn as sns
+hue_colors = {"Yes":"black", "No":"red"}
+sns.scatterplot(x="total_bill", y="tip", data=tips, hue="smoker", palette=hue_colors)
+
+#Using hue with countplots
+import matplotlib.pyplot as plt
+import seaborn as sns
+sns.countplot(x="smoker", data=tips, hue="sex")
+plt.show()
+
+#Relplot()
+Why use relplot() instead of scatterplot() ?
+relplot() lets you create subplots in a single figure
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+sns.relplot(x="total_bill", y="tip", data=tips, kind="scatter", col="smoker") (subplots in columns, that's why col="smoker", for rows, row="smoker")
+plt.show()
+
+col_wrap
+col_order
+row_order
+
+#Customizing scatter plots
+
+*Subgroups with point size
+import matplotlib.pyplot as plt
+import seaborn as sns
+sns.relplot(x="total_bill", y="tip", data=tips, kind="scatter", size="size")
+plt.show()
+
+*Point size and hue
+import matplotlib.pyplot as plt
+import seaborn as sns
+sns.relplot(x="total_bill", y="tip", data=tips, kind="scatter", size="size", hue="size")
+plt.show()
+
+*Subgroups with point style
+import matplotlib.pyplot as plt
+import seaborn as sns
+sns.relplot(x="total_bill", y="tip", data=tips, kind="scatter", size="size", hue="size", style="smoker")
+plt.show()
+
+*Changing point transparency
+(Set alpha to be between 0 and 1)
+import matplotlib.pyplot as plt
+import seaborn as sns
+sns.relplot(x="total_bill", y="tip", data=tips, kind="scatter", alpha=0.4)
+plt.show()
+
+#LINE PLOTS
+import matplotlib.pyplot as plt
+import seaborn as sns
+sns.relplot(x="hour", y="NO_2_mean", data=air_df_mean, kind="line")
+plt.show()
+
+*Subgroups by location and adding markers
+import matplotlib.pyplot as plt
+import seaborn as sns
+sns.relplot(x="hour", y="NO_2_mean", data=air_df_mean, kind="line", style="location", hue="location", markers=True)
+plt.show()
+
+*Turning off line style
+import matplotlib.pyplot as plt
+import seaborn as sns
+sns.relplot(x="hour", y="NO_2_mean", data=air_df_mean, kind="line", style="location", hue="location", markers=True, dashes=False)
+plt.show()
+
+*Replacing confidence interval with standard deviation
+import matplotlib.pyplot as plt
+import seaborn as sns
+sns.relplot(x="hour", y="NO_2", data=air_df_mean, kind="line", ci="sd")
+plt.show()
 
