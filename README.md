@@ -1424,3 +1424,27 @@ sns.set_palette(custom_palette)
 
 *Enlarged context
 sns.set_context("talk")
+
+
+
+#DEFINING A FUNCTION
+
+def square(value):
+    new_value = value ** 2
+    print(new_value)
+    
+square(4)
+16
+
+Also,
+def raise_to_power(value1, value2)
+new_value = value1 ** value2
+return new_value
+
+or,
+def raise_both(value1, value2)
+
+*Scope : part of the program where an object or name may be accesible
+-> Global scope : defined in the main body of the script
+-> Local scope : defined inside a function
+-> Built-in scope : names in the pre-defined built-ins module
