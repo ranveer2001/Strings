@@ -1498,3 +1498,21 @@ sns.lmplot(x="alcohol", y="pH", data=df)
 *lmplot faceting
 Organize data by colors(hue)
 Orgainize data by columns(col)
+
+
+#Setting Seaborn  Style
+-> Seaborn has default configurations that can be applied with sns.set().
+
+sns.set()
+df['Tuition'].plot.hist()
+
+*Theme examples with sns.set_style()
+for style in ['white','dark','whitegrid','darkgrid','ticks']:
+sns.set_style(style)
+sns.distplot(df['Tuition'])
+plt.show()
+
+*Remove axes with despine()
+sns.set_style('white')
+sns.distplot(df['Tuition'])
+sns.despine(left=True)
