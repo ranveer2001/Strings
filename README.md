@@ -1448,3 +1448,53 @@ def raise_both(value1, value2)
 -> Global scope : defined in the main body of the script
 -> Local scope : defined inside a function
 -> Built-in scope : names in the pre-defined built-ins module
+
+
+**INTRODUCTION TO SEABORN
+
+import matplotlib.pyplot as plt
+import pandas as pd
+df = pd.read_csv("wines.csv")
+fig, ax = plt.subplots()
+ax.hist(df['alcohol'])
+
+#Pandas
+
+import pandas as pd
+df = pd.read_csv("wines.csv")
+df['alcohol'].plot.hist()
+
+#Seaborn
+
+-> The distplot is similar to the histogram shown in previous examples.
+-> By default, it generates a Gaussian Kernel Density Estimate(KDE)
+
+import seaborn as sns
+sns.distplot(df['alcohol'])
+
+*Creating a distplot histogram
+sns.distplot(df['alcohol'], kde=False, bins=10)
+
+OR
+
+sns.distplot(df['alcohol'], hist=False, rug=True)
+
+*Further Customizations
+sns.distplot(df['alcohol'], hist=False, rug=True, kde_kws = {'shade':True})
+
+
+
+**REGRESSION PLOTS IN SEABORN
+
+The regplot function generates a scatter plot with a regression line.
+sns.regplot(x="alcohol", y="pH", data=df)
+
+*Lmplot() builds on top of the base regplot()
+regplot() - low level
+lmplot() - high level
+
+sns.lmplot(x="alcohol", y="pH", data=df)
+
+*lmplot faceting
+Organize data by colors(hue)
+Orgainize data by columns(col)
