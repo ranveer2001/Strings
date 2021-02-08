@@ -1516,3 +1516,74 @@ plt.show()
 sns.set_style('white')
 sns.distplot(df['Tuition'])
 sns.despine(left=True)
+
+
+
+**CATEGORICAL PLOT TYPES
+
+sns.stripplot(data=df, y="DRG Definition", x="Average Covered Charges", jitter=True)
+sns.swarmplot(data=df, y="DRG Definition", x="Average Covered Charges")
+sns.boxplot(data=df, y="DRG Definition", x="Average Covered Charges") #Abstract Representation
+sns.violinplot(data=df, y="DRG Definition", x="Average Covered Charges") #Combination of density and boxplot for alternative view
+sns.lvplot(data=df, y="DRG Definition", x="Average Covered Charges") #letter value plot scales more effectively to large datasets
+sns.barplot(data=df, y="DRG Definition", x="Average Covered Charges", hue="Region") #Statistical estimates
+sns.pointplot(data=df, y="DRG Definition", x="Average Covered Charges", hue="Region") #Useful to check how values change across categorical data
+sns.countplot(data=df, y="DRG Definition", hue="Region") #Gives number of instances of each variable
+
+
+**REGRESSION PLOTS
+
+*Plotting with regplot()
+sns.regplot(data=df, x='temp', y='total_rentals', marker='+')
+
+*residplot()
+-> It is useful for evaluating the fit of a model.
+sns.residplot(data=df, x='temp', y='total_rentals')
+
+*Ploynomial regression
+-> It is done using the order parameter.
+sns.regplot(data=df, x='temp', y='total_rentals',order=2)
+
+*residplot with polynomial regression
+sns.residplot(data=df, x='temp', y='total_rentals',order=2)
+
+*Categorical values
+sns.regplot(data=df, x='temp', y='total_rentals', x_jitter=.1, order=2)
+
+*x_estimator can be useful for highlighting trends
+sns.regplot(data=df, x='temp', y='total_rentals', x_estimator=np.mean, order=2)
+
+*x_bins can be used to divide the data into discrete bins
+sns.regplot(data=df, x='temp', y='total_rentals', x_bins=4)
+
+
+
+**MATRIX PLOTS
+
+* Seaborn's heatmap() function requires data to be in a grid format.
+* pandas crosstab() is frequently used to manipulate the data.
+
+pd.crosstab(df["mnth"], df["weekday"], values = df["total_rentals"], aggfunc='mean').round(0)
+sns.heatmap(pd.crosstab(df["mnth"], df["weekday"], values = df["total_rentals"], aggfunc='mean'))
+
+*Customize a heatmap
+sns.heatmap(df_crosstab, annot=True, fmt="d", cmap="YlGnBu", cbar= False, linewidths=.5)
+
+*Plotting a correlation matrix
+Pandas corr function calculates correlations between columns in a dataframe.
+sns.heatmap(df.corr())
+
+**PAIR GRIDS AND PLOTS
+
+*Creating a pairgrid
+g = sns.PairGrid(df, vars=["abc", "dfd"])
+g = g.map(plt.scatter)
+
+*Customizing PairGrid diagonals
+g = g.map_diag(plt.hist)
+g = g.map_offdiag(plt.scatter)
+
+*Pairplot is a shortcut for PairGrid
+sns.pairplot(df, vars=["abc", "dfd"], kind="reg", diag_kind="hist")
+
+
