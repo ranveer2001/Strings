@@ -1727,3 +1727,68 @@ df = pd.read_sql_query("SELECT OrderID, Company Name FROM Orders INNER JOIN cust
 print(df.head()
 
 
+
+
+**IMPORTING FLAT FILES FROM THE WEB
+
+-> urlopen() : accepts URLs instead of file names
+
+*Automate file download in Python
+from urllib.request import urlretrieve
+url = 'ahashshhsdhdjd/winequality-white.csv'
+urlretrieve(url, 'winequality-white.csv')
+
+*Ingredients of URL :
+-> Protocol identifier : http:
+-> Resource name : datacamp.com
+
+*HTTP requests to import files from the web
+-> HTTP : HyperText Transfer Protocol
+
+*GET requests using urllib
+from urllib.request import urlopen, Request
+url = "https://www.wikipedia.com/"
+request = Request(url)
+response = urlopen(request)
+html = response.read()
+response.close()
+
+*GET requests using requests
+import requests
+url = "https://www.wikipedia.com"
+r = requests.get(url)
+text = r.text
+
+*Scraping the web in python
+-> HTML : HyperText Markup language
+-> Mix of structured and unstructured data
+
+*Beautiful soup
+-> Parse and extract structured data from HTML
+
+from bs4 import BeautifulSoup
+import requests
+url = 'jsjsjd'
+r = requests.get(url)
+html_doc = r.text
+soup = BeautifulSoup(html_doc)
+
+*Exploring BeautifulSoup
+print(soup.title)
+print(soup.get_text())
+
+for link in soup.find_all('a'):
+    print(link.get('href'))
+    
+*Introduction to API And JSONs
+
+API : Application Programming interface
+
+JSONs : Javascript Object Notation
+
+*Loading JSONs in Python
+import json
+with open('snakes.json', 'r') as json_file:
+     json_data  = json.load(json_file)
+
+
