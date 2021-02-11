@@ -1587,3 +1587,143 @@ g = g.map_offdiag(plt.scatter)
 sns.pairplot(df, vars=["abc", "dfd"], kind="reg", diag_kind="hist")
 
 
+
+
+**IMPORTING DATA IN PYTHON
+
+*Reading a file
+filename = "abc"
+file = open(filename, mode='r')
+text = file.read()
+file.close
+
+*Writing to a file
+filename = "abc"
+file = open(filename, mode='w')
+file.close
+
+*Alternative way 
+with open('abc', 'r') as file :
+print(file.read())
+
+#How do you import flat files?
+1) Numpy
+2) pandas
+
+*Importing flat files using Numpy
+->They are standard for storing numerical data
+-> Essential for other packages like scikit-learn
+
+import numpy as np
+filename = 'MNST.txt'
+data = np.loadtxt(filename, delimiter = ',')
+data
+
+*Customizing numpy import
+import numpy as np
+filename = 'MNST.txt'
+data = np.loadtxt(filename, delimiter = ',', skiprows = 1)
+print(data)
+
+*For just 1st and 3rd columns use : usecols=[0, 2]
+*Using different data types : dtype = str
+
+*Importing flat files using pandas
+import pandas as pd
+filename = 'winequality-red.csv'
+data = pd.read_csv(filename)
+data.head()
+
+*PICKLED FILES
+import pickle
+with open('pickled_fruit.pkl', 'rb') as file:   (rb means read only and binary file)
+     data = pickled.load(file)
+print(data)
+
+*Importing Excel spreadsheets
+import pandas as pd
+file = 'urbanpop.xlsx'
+data = pd.Excelfile(file)
+print(data.sheet_names)
+
+df1 = data.parse('1960-1966')  (sheet name as a string)
+df2 = data.parse(0)  (sheet name as a float)
+
+*SAS files
+SAS : Statistical Analysis System
+
+*Importing SAS files
+import pandas as pd
+from sas7bdat import SAS7BDAT
+with SAS7BDAT ('urbanpop.sas7bdat') as file :
+     df_sas = file.to_data_frame()
+     
+*Importing Stata file
+import pandas as pd
+data = pd.read_stata('urbanpop.dta')
+
+*HDF5
+Hierarchical Data Format Version 5
+
+*Importing HDF5 files
+importing h5py
+filename = 'ayeueila.hdf5'
+data = h5py.File(filename, 'r')
+print(type(data))
+
+*MATLAB
+Matrix Laboratory
+
+SciPy helps in reading matlab files
+-> scipy.io.loadmat() - read .mat files
+scipy.io.savemat() - write .mat files
+
+*Importing a .mat file
+import scipy.io
+filename = 'workspace.mat'
+mat = scipy.io.loadmat(filename)
+print(type(mat))
+
+
+**CREATING A DATABASE ENGINE
+
+*SQLite database
+-> Fast and simple
+
+*SQLAlchemy
+-> Works with many relational Database management systems
+
+from sqlalchemy import create_engine
+engine = create_engine('sqlite://Northwind.sqlite')
+table_names = engine.table_names()
+print(table_names)
+
+*BASIC SQL query
+SELECT * FROM Table_name
+-> Returns all columns of all rows of the table
+
+SELECT * FROM Orders
+
+*First SQL query
+from sqlalchemy import create_engine
+import pandas as pd
+engine = create_engine('sqlite://Northwind.sqlite')
+con = engine.connect()
+rs = con.execute("SELECT * FROM Orders")
+df = pd.DataFrame(rs.fetchall())
+con.close()
+
+*Set the dataframe column names
+df.columns = rs.keys()
+
+*Pandas way to query the code as above
+df = pd.read_sql_query("SELECT * FROM Orders", engine)
+
+*Advanced queries-(Inner join in Python(Pandas))
+from sqlalchemy import create_engine
+import pandas as pd
+engine = create_engine('sqlite://Northwind.sqlite')
+df = pd.read_sql_query("SELECT OrderID, Company Name FROM Orders INNER JOIN customers on Orders.CustomerID = Customer.CustomerID", engine)
+print(df.head()
+
+
