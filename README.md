@@ -1792,3 +1792,34 @@ with open('snakes.json', 'r') as json_file:
      json_data  = json.load(json_file)
 
 
+
+**DATA TYPE CONSTRAINTS
+
+*String to integers
+sales['Revenue'] = sales['Revenue'].astype('int')
+
+*Numeric to Categorical
+df['marriage_status'] = df['marriage_status'].astype('category')
+
+*Uniqueness constraints
+How to find duplicate values?
+duplicates = height_weight.duplicated()
+print(duplicates)
+
+*Column names to look for duplicates
+column_names = ['first_name', 'last_name', 'address']
+duplicates = height_weight.duplicated(subset = column_names, keep = False)
+
+*Drop duplicates
+height_weight.drop_duplicates(inplace = True)
+
+*Output duplicate values
+column_names = ['first_name', 'last_name', 'address']
+duplicates = height_weight.duplicated(subset = column_names, keep = False)
+height_wweight[duplicates].sort_values(by = 'first_name')
+
+*Group by column names and produce statistical summaries
+column_names = ['first_name', 'last_name', 'address']
+summaries = {'height':'max', 'weight':'mean'}
+height_weight = height_weight.groupby(by = column_names).agg(summaries).reset_index()
+
