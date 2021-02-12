@@ -1864,3 +1864,31 @@ assert temperatures['Temperature'].max() < 40
 *Treating date data
 birthdays['Birthday'] = pd.to_datetime(birthday['Birthday'], infer_datetime_format = True, errors = 'coerce')
 
+
+**COMPARING STRINGS
+
+*Simple string comparison
+from fuzzywuzzy import fuzz
+fuzz.WRatio('Reeding','Reading') #Comparing reeding vs reading
+
+*Partial string comparison
+fuzz.WRatio('Houston Rockets', 'Rockets')
+
+*Partial string comparison with different order
+fuzz.WRatio('Houston Rockets vs Los Angeles Lakers', 'Lakers vs Rockets')
+
+*Comparison with arrays
+from fuzzywuzzy import fuzz
+string = "Houston Rockets vs Los Angeles Lakers"
+choices = pd.Series(['Rockets vs Lakers', 'Lakers vs Rockets', 'Heat vs Bulls')]
+process.extract(string, choices, limit = 2)
+
+*GENERATING PAIRS
+import Recordlinkage
+indexer = recordlinkage.Index()
+indexer.block('state')
+pairs = indexer.index(census_A, census_B)
+
+*Finding the only pairs we want
+potential_matches[potential_matches.sum(axis = 1) => 2]
+
