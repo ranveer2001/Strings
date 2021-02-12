@@ -1833,7 +1833,7 @@ inconsistent_categories = study_data['blood_type'].isin(inconsistent_categories)
 *Dropping inconsistent categories
 inconsistent_categories = set(study_data['blood_type']).difference(categories['blood_type'])
 inconsistent_categories = study_data['blood_type'].isin(inconsistent_categories)
-consistent_data = study_data[^* inconsitent_categories]
+consistent_data = study_data[~ inconsitent_categories]
 
 
 *Cleaning text data
@@ -1852,4 +1852,15 @@ assert sanity_check.min() >= 10
 assert phone['Phone number'].str.contains("+|-").any() == False  (assert returns nothing if the condition passes)
 
 
+
+**UNIFORMITY
+
+*Treating Temperature data
+temp_fah = temperatures.loc[temperatures['Temperature'] > 40, 'Temperature']
+temp_cels = (temp_fah - 32) * (5/9)
+temperatures.loc[temperatures['Temperature'] > 40, 'Temperature'] = temp_cels
+assert temperatures['Temperature'].max() < 40
+
+*Treating date data
+birthdays['Birthday'] = pd.to_datetime(birthday['Birthday'], infer_datetime_format = True, errors = 'coerce')
 
