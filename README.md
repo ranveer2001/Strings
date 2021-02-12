@@ -1816,10 +1816,40 @@ height_weight.drop_duplicates(inplace = True)
 *Output duplicate values
 column_names = ['first_name', 'last_name', 'address']
 duplicates = height_weight.duplicated(subset = column_names, keep = False)
-height_wweight[duplicates].sort_values(by = 'first_name')
+height_weight[duplicates].sort_values(by = 'first_name')
 
 *Group by column names and produce statistical summaries
 column_names = ['first_name', 'last_name', 'address']
 summaries = {'height':'max', 'weight':'mean'}
 height_weight = height_weight.groupby(by = column_names).agg(summaries).reset_index()
+
+
+*Finding inconsistent categories
+inconsistent_categories = set(study_data['blood_type']).difference(categories['blood_type'])
+print(inconsistent_categories )
+
+inconsistent_categories = study_data['blood_type'].isin(inconsistent_categories)
+
+*Dropping inconsistent categories
+inconsistent_categories = set(study_data['blood_type']).difference(categories['blood_type'])
+inconsistent_categories = study_data['blood_type'].isin(inconsistent_categories)
+consistent_data = study_data[^* inconsitent_categories]
+
+
+*Cleaning text data
+*Fixing the phone number column
+phones["Phone number"] = phones["Phone number"].str.replace("+", "00")
+phones
+
+*Replace phone numbers with lower than 10 digits to NaN
+digits = phones['Phone number'].str.len()
+phones.loc[digits < 10, "phone number"] = np.nan
+phones
+
+*Fixing the phone number column
+sanity_check = phone['Phone number'].str.len()
+assert sanity_check.min() >= 10
+assert phone['Phone number'].str.contains("+|-").any() == False  (assert returns nothing if the condition passes)
+
+
 
