@@ -1892,3 +1892,126 @@ pairs = indexer.index(census_A, census_B)
 *Finding the only pairs we want
 potential_matches[potential_matches.sum(axis = 1) => 2]
 
+
+
+
+**DATES IN PYTHON
+
+from datetime import date
+two_hurricanes_date = [date(2016,10,7), date(2017,6,21)]
+
+*Attributes of a date
+from datetime import date
+two_hurricanes_date = [date(2016,10,7), date(2017,6,21)]
+print(two_hurricanes_date[0].year). #2016
+print(two_hurricanes_date[0].month). #10
+print(two_hurricanes_date[0].day).  #7
+
+*Finding the weekday of a date
+print(two_hurricanes_date[0].weekday())
+
+*Math with dates
+from datetime import date
+d1 = date(2017,11,5)
+d2 = date(2017,12,4)
+l = [d1, d2]
+print(min(l))
+
+#Subtract two dates
+delta = d2 - d1
+print(delta.days)
+=29
+
+*Turning date into strings
+
+#ISO 8601 FORMAT
+from datetime import date
+d = date(2017,11,5)
+print(d)
+
+*Putting ISO format in a list
+print([d.isoformat()])
+
+*strftime*
+d = date(2017,1,5)
+print(d.strftime("%Y"))
+2017
+print(d.strftime("Year is %Y") (Also, %Y/%m/%d)
+Year is 2017
+
+*Dates and Time
+from datetime import datetime
+dt = datetime(year=2017, month=10, day=1, hour=15, minute=23, second=25, microsecond=500000)
+print(dt)
+2017-10-01 15:23:25.500000
+
+dt_hr = dt.replace(minute=0, second=0, microsecond=0)
+print(dt_hr)
+2017-10-01 15:00:00
+
+*Printing datetimes
+print(dt.strftime("%Y-%m-%d %H:%M:%S))
+
+*Working with durations
+start = datetime(2017,10,8,23,46,47)
+end = datetime(2017,10,9,0,10,57)
+duration = end - start
+print(duration.total_seconds())
+
+*Creating timedeltas
+from datetime import timedelta
+delta1 = timedelta(seconds=1)
+print(start)
+print(start + delta1)
+
+*UTC Offsets
+from datetime import datetime, timedelta, timezone
+ET = timezone(timedelta(hours=-5))
+dt = datetime(2017,12,30,15,9,3,tzinfo = ET)
+
+IST = timezone(timedelta(hours=5, minutes=30))
+print(dt.astimezone(IST))
+
+*Time zone database
+from datetime import datetime
+from dateutil import tz
+et = tz.gettz('America/New_York) #Format : 'Continent/City
+
+*Start of daylight savings time
+spring_ahead_159am = datetime(2017,3,12,1,59,59)
+spring_ahead_159am.isoformat()
+
+spring_ahead_3am = datetime(2017,3,12,3,0,0)
+spring_ahead_3am.isoformat()
+
+(spring_ahead_3am - spring_ahead_159am).total_seconds()
+
+*Dateutil
+from dateutil import tz
+eastern = tz.gettz('America/New York')
+spring_ahead_159am = datetime(2017,3,12,1,59,59,tzinfo=eastern)
+spring_ahead_3am = datetime(2017,3,12,3,0,0,tzinfo=eastern)
+
+*Ending Daylight Savings Time
+eastern = tz.gettz('US/Eastern')
+first_1am = datetime(2017,11,5,1,0,0,tzinfo = eastern)
+tz.datetime_ambigous(first_1am)
+
+second_1am = datetime(2017,11,5,1,0,0,tzinfo=eastern)
+second_1am = tz.enfold(second_1am)
+
+*Summarizing data in pandas
+rides['Duration'].mean()
+rides['Duration'].sum()
+rides['Duration'].sum()/ timedelta(days=91)
+rides['Member type'].value_counts()
+rides.groupby('Member type').size() #size per group
+rides.groupby('Member type').first() #First ride per group
+
+*Summarizing datetime in Pandas
+rides\.resample('D', on='Start date')\['Duration Seconds']\.mean()\.plot()
+
+
+
+
+
