@@ -2013,5 +2013,121 @@ rides\.resample('D', on='Start date')\['Duration Seconds']\.mean()\.plot()
 
 
 
+**DOCSTRINGS
 
+*Anatomy of a docstring
+def function_name(arguements) :
+"""
+Description of what the function does.
+Description of the arguements, if any.
+Description of the return value(s), if any.
+Description of errors raised, if any.
+Optional extra notes.
+"""
+
+*Google style-arguements
+def function(arg_1, arg_2=42):
+"""Description of what the function does
+
+Args :
+arg_1(str): Description of arg_1 that can break onto the next line if needed.
+arg_2(int, optional): Write optional when an arguement has a default value.
+
+*Google style - return values
+def function(arg_1, arg_2=42):
+"""Description of what the function does
+
+Args :
+arg_1(str): Description of arg_1 that can break onto the next line if needed.
+arg_2(int, optional): Write optional when an arguement has a default value.
+
+Returns:
+bool: Optional description of the return value
+Extra lines are not idented
+"""
+
+*Numpydoc
+def function(arg_1, arg_2=42):
+"""
+Description of what the function does
+
+Parameters
+--------
+
+arg_1 : expected type of arg_1
+        Description of arg_1
+arg_2 : int, optional
+        Write optional when an arguement has default value
+        Default = 42
+
+Returns
+-------
+The type of the return value
+        Can include a description of the return value.
+        Replace "Returns" with "Yields" if this function is a generator.
+"""
+
+*Retrieving docstrings
+def the_answer():
+"""Return the answer to life, the universe , and everything.
+
+Returns:
+   int
+"""
+return 42
+print(the_answer.__doc__)
+
+import inspect
+print(inspect.getdoc(the_answer))
+
+*Surprising Examples of functions
+def foo(x):
+    x[0] = 99
+my_list = [1, 2, 3]
+foo(my_list)
+print(my_list)
+[99,2,3]
+
+def bar(x):
+    x = x + 90
+my_var = 3
+bar(my_var)
+print(my_var)
+3
+
+*CONTEXT MANAGER
+It sets up a context, runs your code and then removes the context.
+
+*Using a context manager
+with <context-manager> (<args>) as <variable-name> :
+      #Run your code here
+      #This code is running inside the context
+      #This code runs after the context is removed
+      
+with open('my_file.txt') as my_file:
+     text = my_file.read()
+     length = len(text)
+     
+print('The file is {} charcters long'.format(length))
+
+*How to create a context manager
+@contextlib.contextmanager
+def my_context :
+    # Add any set up code you need
+    yield
+    # Add any teardown code you need
+    
+*The 'yield' keyword
+@contextlib.contextmanager
+def my_context :
+    print('hello')
+    yield
+    print('goodbye')
+    
+with my_context() as foo:
+     print('foo is {}'.format(foo))
+     
+hello
+foo is 42
+goodbye
 
