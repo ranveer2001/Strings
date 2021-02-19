@@ -2206,3 +2206,90 @@ sns.kdeplot(sample)
 -> Use PMFs if there are a small number of unique values.
 -> Use KDE if there are a lot of values.
 
+
+*Box plot
+sns.boxplot(x='Age', y='gshsh', data=data, whis=10)
+plt.show()
+
+*Log scale
+sns.boxplot(x='Age', y='gshsh', data=data, whis=10)
+plt.yscale('log')
+plt.show()
+
+*Correlation coefficient
+columns = ['HTM4', 'WTKG3', 'AGE']
+subset = brfss[columns]
+subset.corr()
+
+*Linear regression
+from scipy.stats import linregress
+res = linregress(xs,ys)
+
+*Regression lines to get line of best fit
+fx = np.array([xs.min(), xs.max()])
+fy = res.intercept + res.slope * fx
+plt.plot(fx, fy, '-')
+
+#dropna is used to remove the rows that are missing the data we need.
+
+subset = brfss.dropna(subset=['WTKG3', 'HTM4'])
+xs = subset['HTM4']
+ys = subset['WTKG3']
+res = linregress(xs, ys)
+fx = np.array([xs.min(), xs.max()])
+fy = res.intercept + res.slope * fx
+plt.plot(fx, fy, '-')
+
+*Multiple regression
+import statsmodels.formula.api as smf
+results = smf.ols('INCOME2 ~ _VEGESU1', data=brfss).fit() (ols = ordinary least squares)
+results.params (It contains estimated slope and intercept)
+
+*Adding age
+results = smf.ols('realinc ~ educ + age', data=gss).fit()
+results.params
+
+*Adding a quadratic term
+gss['age2'] = gss['age'] ** 2
+model = smf.ols('realinc ~ educ + age + age2', data=gss)
+results=model.fit()
+results.params
+
+*Generating predictions
+df = pd.DataFrame()
+df['age'] = np.linspace(18,85)
+df['age2'] = df['age'] ** 2
+df['educ'] = 12
+df['educ2'] = df['educ'] ** 2
+pred12 = results.predict(df)
+
+*Plotting predictions
+plt.plot(df['age'], pred12, abel='High School')
+plt.plot(mean_income_by_age, 'o', alpha=0.5)
+
+*Logistic regression
+formula = 'realinc ~ educ + educ2 + age + age2 + C(sex)' #C indicates sex is a categorical variable
+results = smf.ols(formula, data=gss).fit()
+results.params
+
+*Boolean variable
+gss['gunlaw'].value_counts()
+gss['gunlaw'].replace([2],[0],inplace=True)
+gss['gunlaw'].value_counts()
+
+*logistic regression
+formula = 'realinc ~ educ + educ2 + age + age2 + C(sex)' #C indicates sex is a categorical variable
+results = smf.logit(formula, data=gss).fit()
+results.params
+
+*Visualizing results
+grouped = gss.groupby()
+favor_by_age = grouped['gunlaw'].mean()
+plt.plot(favor_by_age,'o',alpha=0.5)
+
+plt.plot(df['age'],pred1,label='Male')
+plt.plot(df['age'],pred2,label='Female')
+
+plt.xlabel(Age')
+plt.ylabel('ajsj')
+plt.legend()
