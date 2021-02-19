@@ -2131,3 +2131,78 @@ hello
 foo is 42
 goodbye
 
+
+
+**EXPLORATORY DATA ANALYSIS IN PYTHON
+
+*DATAFRAMES AND SERIES
+*Reading data
+
+import pandas as pd
+nsfg = pd.read_hdf('nsfg.hdf5', 'nsfg')
+type(nsfg)
+
+nsfg.head()
+
+#Each column is a series
+pounds = nsfg['birthwgt_lb1']
+type(pounds)
+
+*Arithmetic with Series
+birth_weight = pounds + ounces/16.0
+birth_weight.describe()
+
+*Probability Mass functions
+pmf_educ = Pmf(educ, normalize=False)
+pmf_educ.head()
+pmf_educ[12] shows the total no. of respondants at 12 years of education
+
+pmf_educ = Pmf(educ, normalize=True)
+pmf_educ.head()
+#This is a normalized pmf and the frequencies add up to 1
+pmf_educ[12] in this result is a fraction
+
+*Plotting pmf as bar chart
+pmf_educ.bar(label='educ')
+plt.xlabel('Years of education')
+plt.ylabel('PMF')
+plt.show()
+
+PMF(Probability Mass Function) is the probability that you get exactly x.
+CDF(Cumulative Distribution Function) is the probability that you get a value <= x.
+
+*Evaluating the CDF
+q = 51
+p = cdf(q)
+print(p)
+
+*Evaluating the inverse CDF
+p = 0.25
+q = cdf.inverse(p)
+print(q)
+
+*Normal distribution
+sample = np.random.normal(size=1000)
+Cdf(sample).plot()
+
+*Normal CDF
+from sciy.stats import norm
+xs = np.linspace(-3,3)
+ys = norm(0,1).cdf(xs)
+plt.plot(xs,ys,color='gray')
+Cdf(sample).plot()
+
+*The bell curve
+xs = np.linspace(-3,3)
+ys = norm(0,1).pdf(xs)
+plt.plot(xs,ys,color='gray')
+
+*KDE plot
+import seaborn as sns
+sns.kdeplot(sample)
+
+*PMF,CDF,KDE
+-> Use CDFs for exploration.
+-> Use PMFs if there are a small number of unique values.
+-> Use KDE if there are a lot of values.
+
