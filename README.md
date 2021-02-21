@@ -2293,3 +2293,40 @@ plt.plot(df['age'],pred2,label='Female')
 plt.xlabel(Age')
 plt.ylabel('ajsj')
 plt.legend()
+
+
+*Binomial distribution
+
+n_deafults = np.random.binomial(n=100, p=0.05, size=1000)
+
+
+
+**OPTIMAL PARAMETERS
+
+*Checking Normality of Michelson Data
+import numpy as np
+import matplotlib.pyplot as plt
+mean = np.mean(michelson_speed_of_light)
+std = np.std(michelson_speed_of_light)
+samples = np.random.normal(mean, std, size=100000)
+
+*Linear regression by least squares with np.polyfit()
+slope, intercept = np.polyfit(total_votes, dem_share, 1) (1 is the degree of polynomial ypu wish to fit)
+slope
+intercept
+
+*Resampling engine
+import numpy as np
+np.random.choice([1,2,3,4,5], size=5)
+
+*Computing a bootstrap replicate
+bs_sample = np.random.choice(michelson_speed_of_light, size=100)
+np.mean(bs_sample)
+
+*Generating a pairs bootstrap sample
+np.arrange(7)
+inds = np.arrange(len(total_votes))
+bs_inds = np.random.choice(inds,len(inds))
+bs_total_votes = total_votes[bs_inds]
+bs_dem_share = dem_share[bs_inds]
+
