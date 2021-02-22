@@ -2311,7 +2311,7 @@ std = np.std(michelson_speed_of_light)
 samples = np.random.normal(mean, std, size=100000)
 
 *Linear regression by least squares with np.polyfit()
-slope, intercept = np.polyfit(total_votes, dem_share, 1) (1 is the degree of polynomial ypu wish to fit)
+slope, intercept = np.polyfit(total_votes, dem_share, 1) (1 is the degree of polynomial you wish to fit)
 slope
 intercept
 
@@ -2329,4 +2329,180 @@ inds = np.arrange(len(total_votes))
 bs_inds = np.random.choice(inds,len(inds))
 bs_total_votes = total_votes[bs_inds]
 bs_dem_share = dem_share[bs_inds]
+
+
+
+
+**SUPERVISED LEARNING WITH SCIKIT LEARN
+
+What is Machine Learning?
+-> It is the art and science of giving computers the ability to learn to make decisions from data without being explicitly programmed.
+Examples : Learning to predict whether an email is spam or not; Clustering wikipedia entries into different categories.
+-> Supervised learning : Uses labeled data
+-> Unsupervised learning : Uses unlabeled data
+
+*Unsupervised learning
+-> Uncovering hidden pattern from unlabeled data
+Example : Grouping customers into distinct categories (Clustering)
+
+*Reinforcement learning
+-> Software agents interact with an environment; learn how to optimize their behaviour given a system of rewards and punishments.
+Applications : Economics, game playing, genetics
+
+*Supervised learning
+-> There is predictor variables and a target variable.
+Aim : predict the target variable, given the  predictor variables.
+Features = predictor variables = independent variables
+Target variable = dependent variable = response variable
+
+*The IRIS dataset in scikit-learn
+from sklearn import datasets
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+plt.style.se('ggplot')
+iris = datasets.load_iris()
+type(iris)
+print(iris_keys())
+iris.data.shape
+(150,4)
+iris.target_names
+
+*Exploratory data analysis(EDA)
+X = iris.data
+Y = iris.arget
+df = pd.DataFrame(X, columns=iris.feature_names)
+print(df.head())
+
+*Visual EDA
+_ = pd.plotting.scatter_matrix(df, c = y, figsize = [8,8], s = 50, marker = 'D') (c is color and s is shape)
+
+*K-Nearest Neighbors(KNN)
+-> It predicts the label of a data point by looking at the 'k' closest labeled data points , taking majority vote.
+
+*Training a model on the data = 'fitting' a model to the data
+.fit() method is used
+.predict() method to predict the labels of new data
+
+*Using scikit learn to fit a classifier
+from sklearn.neighbors import KNeighborsClassifier
+knn = KNeighborsClassifier(n_neighbour = 6)
+knn.fit(iris['data'], iris['target'])
+iris['data'].shape
+(150,4)
+iris['target'].shape
+(150,)
+
+*Predicting on unlabeled data
+X_new = np.array([[5.6, 2.8, 3.9, 1.1], 
+        [5.7, 2.6, 3.8, 1.3],
+        [4.7, 3.2, 1.3, 0.2]])
+   
+prediction = knn.predict(X_new)
+X_new.shape
+(3,4)
+print('Prediction :{}'.format(prediction))
+Prediction : [1 1 0]
+
+*Measuring Model performance
+
+*Train/Test split
+from sklearn.model_selection import train_test_split
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size = 0.3, random_state = 21, stratify = Y)
+knn = KNeighborsClassifier(n_neighbors = 8)
+knn.fit(X_train, Y_train)
+Y_pred = knn.predict(X_test)
+print(\"Test et predictions :\\n {}\"format(Y_pred)
+knn.score(X_test, Y_test) (It predicts the accuracy of the model)
+
+*Model complexity
+-> Larger k : smoother decision boundary = less complex model
+-> Smaller k : more complex model = can lead to overfitting
+
+*Introduction to egression
+
+*Creating feature and target arrays
+X = boston.drop('MEDV', axis=1).values
+y = boston['MEDV'].values
+
+*Predicting house value from a single feature
+X_rooms = X[:,5]
+type(X_rooms) type(y)
+y = y.reshape(-1,1)
+X_rooms = X_rooms.reshape(-1,1)
+
+*Plotting house value vs no. of rooms
+plt.scatter(X_rooms, y)
+plt.ylabel('Value of house/100($)')
+plt.xlabel'Number of rooms')
+plt.show();
+
+*Fitting a regression model
+import numpy as np
+from sklearn.linear_model import LinearRegression
+
+reg = LinearRegression()
+reg.fit(X_rooms,y)
+prediction_space = np.linspace(min(X_rooms), max(X_rooms)).reshape(-1, 1)
+
+plt.scatter(X_rooms, , color=blue')
+plt.plot(prediction_space, reg_predict(prediction_space), color = 'black', linewidth = 3)
+plt.show()
+
+*Linear regression on all features
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size = 0.3, random_state = 42)
+reg_all = LinearRegression()
+reg_all.fit(X_train, Y_train)
+Y_pred = reg_all.predict(X_test)
+reg_all.score(X_test, Y_test)
+
+*Cross validation in scikit-learn
+from sklearn.model_selection import cross_val_score
+from sklearn.linear_model import LinearRegression
+reg = LinearRegression()
+cv_results = cross_val_score(reg, X, Y, cv =5) (cv is no.of folds required)
+print(cv_results)
+
+*Regularized Regression
+-> Large coefficients can lead to overfitting; penalizing large coefficients is called regularization.
+
+*Ridge Regression in scikit learn
+-> Ridge Regression is a technique for analyzing multiple regression data that suffer from multicollinearity.
+
+from sklearn.linear_model import Ridge
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size = 0.3, random_state = 42)
+ridge = Ridge(alpha = 0.1, normalize = True) (normalize = True ensures that all variables are on the same scale)
+ridge.fit(X_train, Y_train)
+ridge_pred = ridge.predict(X_test)
+ridge.score(X_test, Y_test)
+
+*Lasso Regression in scikit-learn
+-> In statistics and machine learning, lasso is a regression analysis method that performs both variable selection and regularization in order to enhance the prediction accuracy and interpretability of the resulting statistical model.
+
+from sklearn.linear_model import Ridge
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size = 0.3, random_state = 42)
+lasso = lasso(alpha = 0.1, normalize = True) (normalize = True ensures that all variables are on the same scale)
+lasso.fit(X_train, Y_train)
+lasso_pred = lasso.predict(X_test)
+lasso.score(X_test, Y_test)
+
+-> Lasso regression shrinks the coefficients of less important features to exactly 0.
+
+*Lasso for feature selection in scikit-learn
+from sklearn.linear_model import Lasso
+names = boston.drop('MEDV', axis = 1).columns
+lasso = lasso(alpha = 0.1)
+lasso_coef = lasso.fit(x, y).coef_
+_ = plt.plot(range(len(names)), lasso_coef)
+_ = plt.xticksrange(len(names)), names, rotation=60)
+_ = plt.ylabel('Coefficients')
+plt.show()
+
+
+
+
+
 
