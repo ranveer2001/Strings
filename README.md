@@ -2502,6 +2502,120 @@ _ = plt.ylabel('Coefficients')
 plt.show()
 
 
+*Confusion matrix in scikit-learn
+from sklearn.metrics import classification_report
+from sklearn.metrics import confusion_matrix
+knn = KNeighborsClassifiers(n_neighbors = 8)
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size = 0.4, random_state = 42)
+knn.fit(X_train, Y_train)
+y_pred = knn.predict(X_test)
+
+*Logistic Regression
+It outputs probabilities.
+If the probability 'p' is greater than 0.5 :
+The data is labeled as '1'
+If the probability 'p' is less than 0.5:
+The data is labeled as '0'
+
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+logreg = LogisticRegression()
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size = 0.3, random_state = 42)
+logreg.fit(X_train, Y_train)
+Y_pred = logreg.predict(X_test)
+
+-> By default, logistic regression threshold is 0.5
+
+*Reciever Operating Characteristic curve (ROC curve)
+*Plotting the ROC curve
+from sklearn.metrics import roc_curve
+y_pred_prob = logreg.predict_proba(X_test)[:,1]
+fpr, tpr, threshold = roc_curve(y_test y_red_prob)
+plt.plot([0,1], [0,1], 'k--')
+plt.plot(fpr, tpr, label='Logistic Regression')
+plt.xlabel('False Positive Rate')
+plt.ylabel('True Positive Rate')
+plt.title('Logistic Regression ROC curve')
+plt.show();
+
+*Precision = TP / (TP + FP)
+*Recall = TP/ (TP + FN)
+
+-> Larger area under ROC curve = better model
+
+*Area under ROC curve(AUC)
+from sklearn.metrics import roc_auc_score
+logreg = LogisticRegression()
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size = 0.3, random_state = 42)
+logreg.fit(X_train, Y_train)
+y_pred_prob = logreg.predict_proba(X_test)[:,1]
+roc_auc_score(y_test, y_pred_prob)
+
+*AUC using cross-validation
+from sklearn.model_selection import cross_val_score
+cv_scores = cross_val_scores(logreg X, Y, cv = 5, scoring='roc_auc')
+print(cv_scores)
+
+*Hyperparameters tuning
+-> Parameters like alpha and k: Hyperparameters
+-> Hyperparameters cannot be learned by fitting the model
+
+*GridSearch CV in scikit-learn
+from skearn.model_selection import GridSearchCV
+param_grid = {'n_neighbors':np.arrange(1, 50)}
+knn = KNeighborsClassifier()
+knn_cv = GridSearchCV(knn, param_grid, cv=5)
+knn_cv.fit(X,Y)
+knn_cv.best_params
+knn_cv.best_score_
+
+*Preprocessing data
+-> A dummy variable is one that takes only the value 0 or 1 to indicate the absence or presence of some categorical effect that may be expected to shift the outcome. Dummy variables are useful because they enable us to use a single regression equation to represent multiple groups.
+
+*Encoding dummy variables
+import pandas as pd
+df = pd.read_csv('auto.csv')
+df_origin = pd.get_dummies(df)
+print(df_origin.head())
+
+df_origin = df_origin.drop('origin_Asia', axis=1)
+print(df_origin.head())
+
+*Imputing missig data
+from sklearn.preprocessing import Imputer
+imp = Imputer(missing_values='NaN', strategy='mean', axis=0)
+imp.fit(X)
+X = imp.transform(X)
+
+*Imputing with a pipeline
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import Imputer
+imp = Imputer(missing_values='NaN', strategy='mean', axis=0)
+logreg = LogisticRegression()
+steps = [('imputation',imp),('logistic_regression',logreg)]
+pipeline = Pipeline(steps)
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size = 0.3, random_state = 42)
+pipeline.fit(X_train, Y_train)
+y_pred = pipeline.predict(X_test)
+pipeline_score(X_test, Y_test)
+
+*Scaling in a pipeline
+from sklearn.preprocessing import StandardScaler
+steps = [('scaler', StandardScaler()), ('knn', KNeighborClassifier())]
+pipeline = Pipeline(steps)
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size = 0.3, random_state = 42)
+knn_scaled = pipeline.fit(_train, Y_train)
+Y_pred = pipeline.predict(X_test)
+accuracy_score(Y_test, Y_pred)
+
+*CV and Scaling in a pipeline
+Steps = [('scaler', StandardScaler()), ('knn', KNeighborClassifier())]
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size = 0.3, random_state = 42)
+knn_scaled = pipeline.fit(_train, Y_train)
+cv = GridSearchCV(pipeline, param_grid = parameters)
+cv.fit(X_train, Y_train)
+Y_pred = cv.predict(X_test)
+
 
 
 
