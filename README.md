@@ -2719,3 +2719,110 @@ plt.show()
 -> Has no separate fit() or transform() method
 
 
+*PCA : Principal Component Analysis
+-> It is a fundamental dimension reduction technique.
+-> PCA aligns data with axes by rotating
+-> Shifts data sample so they have 0 mean
+-> PCA is a scikit learn component
+-> fit() learns the transformation from given data
+-> transform() applies the learned transformation
+
+from sklearn.decomposition import PCA
+model = PCA()
+model.fit(samples)
+transformed = model.transform(samples)
+
+*Pearson correlation
+-> Measures linear correlation of features
+-> Value between 1 and -1
+-> 0 value means no linear correlation
+
+import matplotlib.pyplot as plt
+from scipy.stats import pearsonr
+width = grains[:,0]
+length = grains[:,1]
+plt.scatter(width, length)
+plt.axis('equal')
+plt.show()
+correlation, pvalue = pearsonr(width, length)
+print(correlation)
+
+*Intrinsic dimension
+-> It is the number of features needed to approximate the dataset.
+-> PCA identifies intrinsic dimension when samples have any number of features
+-> Intrinsic dimension = number of PCA features with significant variance
+
+*Plotting the variance of PCA features
+import matplotlib.pyplot as plt
+from sklearn.decomposition import PCA
+pca = PCA()
+pca.fit(samples)
+features = range(pca.n_components_)
+plt.bar(features, pca.explained_variance_)
+plt.xticks(features)
+plt.ylabel('variance')
+plt.xlabel('PCA feature')
+plt.show
+
+*Sparse arrays and csr_matrix
+-> "Sparse":most entries are zero
+-> Can use scipy.sparse.csr_matrix instead of NumPy array
+-> csr_matrix remembers only the non-zero entries
+
+*TruncatedSVD and csr_matrix
+-> scikit learn PCA doesn't support csr_matrix
+-> use scikit-learn TruncatedSVD instead 
+-> Performs same transformation
+
+from sklearn.decomposition import TruncatedSVD
+model = TruncatedSVD(n_components=3)
+model.fit(documents)
+TruncatedSVD(algorithm ='randomized',...)
+transformed = model.transform(documents)
+
+*Non-negative matrix factorisation(NMF)
+-> Dimension reduction technique
+-> NMF models are interpretable(unlike PCA)
+-> All sample features are non-negative
+-> Follows fit()/transform() pattern
+-> Must specify no.of components
+-> Works both with Numpy arrays and csr_matrix
+
+from sklearn.decomposition import NMF
+model = NMF(n_components = 2)
+model.fit(samples)
+nmf_features = model.transform(samples)
+
+#Reconstruction of a sample
+print(sample[i,:])
+
+*Grayscale images
+-> Has no colors, only shades of gray
+-> Measures pixel brightness
+Value between 0 and 1
+
+*Visualizing samples
+from matplotlib import pyplot as plt
+plt.imshow(bitmap, cmap='gray', interpolation='nearest')
+plt.show()
+
+*Cosine similarities
+-> Uses the angle between the lines
+-> Higher values means more similiar
+
+*Calculating cosine similarities
+from sklearn.preprocessing import normalize
+norm_features = normalize(nmf_features)
+#if has index 23
+current_article = norm_features[23,:]
+similarities = norm_features.dot(current_article)
+print(similarities)
+
+*DataFrames and labels
+import pandas as pd
+norm_features = normalize(nmf_features)
+df = pd.DataFrame(norm_features, index=titles)
+current_article = df.loc['Dog bites man']
+similarities = df.dot(current_article)
+print(similarities.nlargest())
+
