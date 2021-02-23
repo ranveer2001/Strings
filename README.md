@@ -2617,6 +2617,105 @@ cv.fit(X_train, Y_train)
 Y_pred = cv.predict(X_test)
 
 
+**UNSUPERVISED LEARNING
 
+-> It finds patterns in data.
+Example : Clustering customers by their purchases and compressing the data using purchase patterns.
+
+from sklearn.cluster import KMeans
+model = KMeans(n_clusters = 3)
+model.fit(samples)
+labels = model.predict(samples)
+print(labels)
+
+-> Mean of each cluster : centroid
+
+*Scatter plots
+import matplotlib.pyplot as plt
+xs = samples[:,0]
+ys = samples[:,2]
+plt.scatter(xs,ys,c=labels)
+plt.show()
+
+*Cross tabulation with pandas
+*Aligning labels and species
+import pandas as pd
+df = pd.DataFrame({'labels':labels, 'species':species})
+print(df)
+
+*Crosstab of labels and species
+ct = pd.crosstab(df['labels'], df['species'])
+print(ct)
+
+*Inertia measures cluster quality
+-> Measures how spread out the clusters are(lower is better)
+-> k-means attempts to minimize the inertia when choosing clusters
+
+from sklearn.clusters import KMeans
+
+model = KMeans(n_clusters = 3)
+model.fit(samples)
+print(model_inertia)
+
+*sklearn StandardScaler
+from sklearn.preprocessing import StandardScaler
+scaler = StandardScaler()
+scaler.fit(samples)
+StandardScaler(copy=True, with_mean=True, with_std = True)
+sample_scaled = scaled.transform(samples)
+
+-> For better clustering, first use StandardScaler and then KMeans. Use Sklearn pipeline to combine multiple steps.
+
+*Pipelines combine multiple steps
+from sklearn.preprocessing import StandardScaler
+from sklearn.cluster import KMeans
+scaler = StandardScaler()
+model = KMeans(n_clusters = 3)
+from sklearn.pipeline import make_pipeline
+pipeline = make_pipeline(scaler, kmeans)
+pipeline.fit(samples)
+labels = pipeline.predict(samples)
+
+-> StandardScaler is a "preprocessing" step.
+-> Other Examples : MaxAbsScaler and Normalizer
+
+*Hierarchical clustering with SciPy
+import matplotlib.pyplot as plt
+from scipy.cluster.hierarchy import linkage, dendrogram
+mergings = linkage(samples, method = 'complete')
+dendrogram(mergings, labels = country_names, leaf_rotation = 90, leaf_font_size = 6)
+plt.show()
+
+-> Distance between clusters is defined by a "linkage method"
+-> In "complete" linkage : distance between clusters is max.
+
+*Extracting the cluster labels
+-> Use fcluster() function
+-> Returns a NumPy array of cluster labels
+
+from scipy.cluster.hierarchy import linkage
+mergings = linkage(samples, method = 'complete')
+from scipy.cluster.hierarchy import fcluster
+labels = fcluster(mergings, 15, criterion='distance')
+print(labels)
+
+*t-SNE for 2-dimensional maps
+t-SNE : "t-distributed stochastic neighbor embedding"
+-> Maps sample to 2D space(or 3D)
+-> Great for insoecting datasets
+
+*t-SNE in sklearn
+import matplotlib.pyplot as plt
+from sklearn.manifold import TSNE
+model = TSNE(learning_rate = 100)
+transformed = model.fit_transform(samples)
+xs = transformed[:,0]
+ys = transformed[:,1]
+plt.scatter(xs, ys, c=species)
+plt.show()
+
+-> t-SNE has only fit_transform() method
+-> It simultaneously fits the model and transforms the data
+-> Has no separate fit() or transform() method
 
 
