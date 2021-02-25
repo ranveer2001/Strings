@@ -2826,3 +2826,154 @@ current_article = df.loc['Dog bites man']
 similarities = df.dot(current_article)
 print(similarities.nlargest())
 
+
+
+
+**CLASSIFICATION-TREE
+
+-> Sequence of if-else questions about indivdual features.
+-> Objective: infer class labels.
+-> Capture non-linear relationship between features and labels.
+-> Don't require feature scaling.
+
+*Classification-tree in scikit-learn
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+
+X_train, X_test, Y_train, Y_test = train_test_split(X,Y,test_size=0.2,stratify=Y,random_state=1)
+dt = DecisionTreeClassifier(max_depth=2, random_state=1)
+dt.fit(X_train, Y_train)
+Y_pred = dt.predict(X_test)
+accuracy_score(Y_test, Y_pred)
+
+-> Decision regions : Region in the feature pace where all instances are assigned to one class label.
+-> Decision boundary : surface separating different decision regions.
+-> Decision Tree : Data structure consisting of a hierarchy of nodes.
+-> Node : question or prediction.
+
+-> Three kinds of nodes :
+1) Root : no parent node, question giving rise to two children nodes.
+2) Internal node : one parent node, question giving rise to two children nodes.
+3) Leaf : one parent node, no children node. --> prediction
+
+-> Nodes are grown recursively.
+-> At each node, split the data based on:
+* feature f and split-point sp to maximize IG(node) (IG : Information Gain)
+-> If IG(node)= 0, declare the node a leaf.
+
+*Information criterion in scikit-learn
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+
+X_train, X_test, Y_train, Y_test = train_test_split(X,Y,test_size=0.2,stratify=Y,random_state=1)
+dt = DecisionTreeClassifier(criterion="gini", random_state=1)
+dt.fit(X_train, Y_train)
+Y_pred = dt.predict(X_test)
+accuracy_score(Y_test, Y_pred) (Accuracy increases)
+
+*Decision-tree for regression
+*Regression-tree in scikit-learn
+
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error as MSE
+
+X_train, X_test, Y_train, Y_test = train_test_split(X,Y,test_size=0.2,random_state=1)
+dt = DecisionTreeClassifier(max_depth=4, min_samples_leaf=0.1, random_state=1)
+dt.fit(X_train, Y_train)
+Y_pred = dt.predict(X_test)
+mse_dt = MSE(Y_test, Y_pred) (Obtain root mean square error of your model)
+rmse_dt = mse_dt**(1/2)
+print(rmse_dt)
+
+*Generalization Error
+Generalization error of f1 = bias^2 + variance + irreducible error
+Bias : error term that tells you, on average, how much f1 not equal to f
+Variance : tells how much f1 is inconsistent over different training sets.
+Model complexity : sets the flexibility of f1.
+Examples : max tree depth, min samples per leaf
+Best model complexity = lowest generalization error
+
+*Estimating the Generalization Error
+-> split the data to training and test sets.
+-> fit f1 to the training set.
+-> evaluate the error of f1 on the unseen test set.
+-> generalization error of f1 = test set error of f1
+
+-> For better model Evaluation consider:
+* Cross-Validation(CV)
+-> K-Fold CV,
+-> Hold-Out CV
+
+CV error = (E1, E2, ..., E10)/10
+
+-> Diagnose variance problems :
+If f1 suffers from high variance: CV error of f1 > training set error of f1.
+Thus, f1 has said to overfit the training set.
+To remedy overfitting :
+1) decrease model complexity
+2) decrease max depth, increase min samples per leaf
+3) gather more data..
+
+-> Diagnose bias problems :
+If f1 suffers from high bias: CV error of f1 = training set error of f1 >>> desired error
+Thus, f1 has said to underfit the training set
+To remedy underfitting :
+1) increase model complexity
+2) increase max depth, decrease min samples per leaf
+3) gather more relevant features
+
+*K-Fold CV in sklearn
+
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error as MSE
+from sklearn.model_selection import cross_val_score
+
+SEED = 123
+X_train, X_test, Y_train, Y_test = train_test_split(X,Y,test_size=0.2,random_state=SEED)
+dt = DecisionTreeClassifier(max_depth=4, min_samples_leaf=0.1, random_state=SEED)
+MSE_CV = - cross_val_score(dt, X_train, Y_train, cv=10, scoring='neg_mean_squared_error', n_jobs = -1)
+dt.fit(X_train, Y_train)
+Y_predict_train = dt.predict(X_train)
+Y_predict_test = dt.predict(X_test)
+print('CV MSE : {:,F}'.format(MSE_CV.mean())
+
+*Ensemble Learning
+It is the solution towrads the limitations of CARTS(Classification and Regression Trees)
+
+-> Train different models on the ame dataset.
+-> Let each model make its predictions.
+-> Meta-model : aggregates predictions of individual models.
+-> Final prediction : more robust and less prone to errors.
+
+*Voting Classifier in sklearn
+
+from sklearn.metrics import accuracy_score
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.neighbors import KNeighborslassifier as KNN
+from sklearn.ensemble import VotingClassifier
+
+SEED = 1
+X_train, X_test, Y_train, Y_test = train_test_split(X,Y,test_size=0.2,random_state=SEED)
+lr = logisticegression(random_state = SEED)
+knn = KNN()
+dt = DecisionTreeClassifier(random_state = SEED)
+
+classifiers = [('Logistic Regression', lr), ('K Nearest Neighbour's, knn), ('Classification Tree', dt)]
+
+for clf_name, clf in classifiers :
+    clf.fit(X_train, Y_train)
+    y_pred = clf.predict(X_test)
+    print('{:s} : {:.3f}'.format(clf_name, accuracy_score(y_test, y_pred))
+    
+vc = VotingClassifier(estimators = classifiers)
+vc.fit(X_train, X_test)
+y_pred = vc.predict(X_test)
+print('Voting Classifier : {.3f}'.format(accuracy_score(y_test, y_pred)))
+    
+
