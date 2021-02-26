@@ -2977,3 +2977,93 @@ y_pred = vc.predict(X_test)
 print('Voting Classifier : {.3f}'.format(accuracy_score(y_test, y_pred)))
     
 
+
+**BAGGING
+
+-> Bootstrap aggregration
+-> Uses a technique known as bootstrap
+-> Reduces variance of individual models in ensemble
+
+*Classification :
+-> Aggregates prediction by majority voting
+-> BaggingClassifier in scikit-learn
+
+*Regression :
+-> Aggreagates prediction through averaging
+-> BaggingRegressor in scikit-learn
+
+from sklearn.ensemble import BaggingClassifier
+from sklearn.metrics import accuracy_score
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
+
+SEED = 1
+X_train, X_test, Y_train, Y_test = train_test_split(X,Y,test_size=0.2,random_state=SEED)
+dt = DecisionTreeClassifier(max_depth=4, min_samples_leaf=0.16, random_state = SEED)
+bc = BaggingClassifier(base_estimator=dt, n_estimators=300, n_jobs=-1)
+bc.fit(X_train, Y_train)
+y_pred = bc.predict(X_test)
+accuracy = accuracy_score(Y_test, Y_pred)
+print('Accuracy of Bagging Classifier : {:.3f}'.format(accuracy))
+
+-> On average, for each model, 63% of the training instances are sampled.
+-> The remaining 37% constitute the OOB(Out of Bag) instances.
+
+from sklearn.ensemble import BaggingClassifier
+from sklearn.metrics import accuracy_score
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
+
+SEED = 1
+X_train, X_test, Y_train, Y_test = train_test_split(X,Y,test_size=0.2,random_state=SEED)
+dt = DecisionTreeClassifier(max_depth=4, min_samples_leaf=0.16, random_state = SEED)
+bc = BaggingClassifier(base_estimator=dt, n_estimators=300,oob_score = True, n_jobs=-1)
+bc.fit(X_train, Y_train)
+y_pred = bc.predict(X_test)
+test_accuracy = accuracy_score(Y_test, Y_pred)
+oob_accuracy = bc.oob_score_
+print('Test set accuracy: {:.3f}'.format(test_accuracy))
+print('OOB accuracy: {:.3f}'.format(oob_accuracy))
+
+-> In bagging, Base estimator : Decision Tree, Logistic Regression, Neural Net..
+-> Estimators use all features for training and prediction
+
+*Random Forest(RF)
+-> Base estimator : Decision Tree
+-> RF introduces further randomization in the training of individual trees.
+-> d features are sampled at each node without replacement
+(d < total number of features)
+
+*Classification :
+-> Aggregates prediction by majority voting
+-> RandomForestClassifier in scikit-learn
+
+*Regression :
+-> Aggreagates prediction through averaging
+-> RandomForestRegressor in scikit-learn
+
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error as MSE
+
+SEED = 1
+dt = DecisionTreeClassifier(max_depth=4, min_samples_leaf=0.16, random_state = SEED)
+rf = RandomForestRegressor(min_samples_leaf=0.12, n_estimators=300, random_state = SEED)
+rf.fit(X_train, Y_train)
+y_pred = rf.predict(X_test)
+rmse_test = MSE(Y_test, Y_pred) ** (1/2)
+print('Test set RMSE of rf: {:.2f}'.format(rmse_test))
+
+*Feature Importance :
+-> Tree-based methods: enable measuring the importance of each feature in prediction
+-> In sklearn :
+* how much the tree nodes use a particular feature(weighted average) to reduce impurity
+* accessed using the attribute feature_importance
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+importances_rf = pd.Series(rf.feature_importance_, index = X.columns)
+sorted_importances_rf = importances_rf.sort_values()
+sorted_importances_rf.plot(kind='barh', color='lightgreen')
+plt.show()
