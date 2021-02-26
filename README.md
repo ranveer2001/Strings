@@ -3047,7 +3047,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error as MSE
 
 SEED = 1
-dt = DecisionTreeClassifier(max_depth=4, min_samples_leaf=0.16, random_state = SEED)
+X_train, X_test, Y_train, Y_test = train_test_split(X,Y,test_size=0.2,random_state=SEED)
 rf = RandomForestRegressor(min_samples_leaf=0.12, n_estimators=300, random_state = SEED)
 rf.fit(X_train, Y_train)
 y_pred = rf.predict(X_test)
@@ -3067,3 +3067,118 @@ importances_rf = pd.Series(rf.feature_importance_, index = X.columns)
 sorted_importances_rf = importances_rf.sort_values()
 sorted_importances_rf.plot(kind='barh', color='lightgreen')
 plt.show()
+
+
+
+
+**ADABOOST
+
+-> Boosting : Ensemble method combining several weak learners to form a strong learner.
+-> Weak learner : Model doing slightly bettwer than random guessing.
+-> Most popular boosting methods :
+* AdaBoost
+* Gradient Boosting
+
+*Adaboost
+-> Stands for Adaptive Boosting
+-> Each predictor pays more attention to the instances wrongly predicted by its predecessor
+-> Achieved by changing the weights of training instances
+-> Each predictor is assigned a coefficient alpha
+-> alpha depends on the predictor's training error
+
+*Adaboost in sklearn
+
+from sklearn.ensemble import AdaBoostClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import roc_auc_score
+from sklearn.tree import DecisionTreeClassifier
+
+SEED = 1
+X_train, X_test, Y_train, Y_test = train_test_split(X,Y,test_size=0.2,random_state=SEED)
+dt = DecisionTreeCassifier(max_depth=1, random_state=SEED)
+adb_clf = AdaBoostClassifier(base_estimator=dt, n_estimators=100)
+adb_clf.fit(X_train, Y_train)
+Y_pred_proba = adb_clf.predict_proba(X_test)[:,1]
+adb_clf_roc_auc_score = roc_auc_score(Y_test, Y_pred_proba)
+print('ROC AUC score: {:.2f}'.format(adb_clf_roc_auc_score))
+
+*Gradient Boosting(GB)
+-> Sequential correction of predecessor's error.
+-> Does not tweak the weights of training instances.
+-> Fit each predictor is trained using its predecessor's residual errors as labels.
+-> Gradient Boost Trees : a CART is used as a base learner
+
+*Gradient Boosting in sklearn
+
+from sklearn.ensemble import GradientBoostRegressor
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error as MSE
+
+SEED = 1
+X_train, X_test, Y_train, Y_test = train_test_split(X,Y,test_size=0.2,random_state=SEED)
+gbt = GradientBoostRegressor(n_estimators=300, max_depth=1, SEED)
+gbt.fit(X_train, Y_train)
+Y_pred = g
+
+*Stochastic Gradient Boosting(SGB)
+-> Each tree is trained on a random subset of rows of the training data.
+-> The sampled instances(40%-80% of training sets) re sampled without replacement.
+-> Features are sampled when choosing split points.
+-> Result : further ensemble diversity
+-> Effect : adding further variance to the ensemble of trees
+
+*Stochastic Gradient Boosting in sklearn
+
+from sklearn.ensemble import GradientBoostRegressor
+from sklearn.mod
+
+sgbt = GradientBoostRegressor(max_depth=1, subsample=0.8, max_features=0.2, n_estimators=300, SEED)
+sgbt.fit(X_train, Y_train)
+Y_pred = sgbt.predict(X_test)
+rmse_test = MSE(Y_test, Y_pred) ** (1/2)
+print('Test set RMSE: {:.2f}'.format(rmse_test))
+
+
+
+**TUNING A CART'S HYPERPARAMETERS
+
+*Hyperparameters
+*parameters : learned from data
+-> CART example : split-point of node, split-feature of a node etc
+*hyperparameters : not learned from data, set prior to training
+-> CART example : max_depth, min_samples_leaf, splitting criterion
+
+-> optimal model : yields an optimal score
+-> score : in sklearn defaults to accuracy(classification) and R^2(regression)
+-> Cross validation is used to estimate the generalization performance
+
+*Approaches to hyperparameter tuning :
+-> Grid Search
+-> Random Search
+-> Bayesian Optimization
+-> Genetic Algorithms
+
+from sklearn.model_selection import GridSearchCV
+params_dt = {'max_depth': [1, 2, 3, 4]
+             'min_samples_leaf': [0.02, 0.03, 0.04, 0.09]
+             'max_features': [0.2, 0.4, 0.6, 0.9]}
+
+grid_dt = GridSerachCV(estimator = dt, param_grid = params_cv, scoring = 'accuracy', cv = 10, n_jobs = -1)
+grid_dt.fit(X_train, Y_train)
+best_hyperparams = grid_dt.best_params_
+print('Best hyperparameters:\n', best_hyperparams)
+best_model = grid_dt.best_estimator_
+
+*Random Forests Hyperparameters
+-> CART hyperparameters
+-> number of estimators
+-> bootstrap
+
+-> Hyperparameter tuning is sometimes expensive and leads to very slight improvement at times.
+
+*Inspecting RF Hyperparameters in sklearn
+from sklearn.ensemble import RandomForestRegressor
+SEED = 1
+rf = RandomForestRegressor(random_state = SEED)
+rf.get_params()
+
