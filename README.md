@@ -3182,3 +3182,222 @@ SEED = 1
 rf = RandomForestRegressor(random_state = SEED)
 rf.get_params()
 
+
+**UNSUPERVISED LEARNING
+
+Common unspervised learning algorithms : clustering, neural networks, nomaly detection
+-> Clustering : The process of grouping items with similiar characteristics.
+
+*Plotting data for clustering
+ from matplotlib import pyplot as plt
+ x_coordinates = [89, 90, 65, 67, 33, 60]
+ y_coordinates = [22, 78, 89, 90, 80, 44]
+ plt.scatter(x_coordinates, y_coordinates)
+ plt.show()
+ 
+ *Hierarchial clustering in SciPy
+ from scipy.cluster.hierarchy import linkage, fcluster
+ from matplotlib import pyplot as plt
+ import seaborn as sns, pandas as pd
+ 
+ x_coordinates = [89, 90, 65, 67, 33, 60]
+ y_coordinates = [22, 78, 89, 90, 80, 44]
+ 
+ df = pd.DataFrame({'x_coordinate' : x_coordinates, 'y_coordinate' : y coordinates})
+ 
+ Z = linkage(df, 'ward')
+ df['cluster_labels'] = fcluster(Z, 3, criterion='maxclust')
+ sns.scatterplot(x='x_coordinate', y='y_coordinate', hue='cluster_labels', data = df)
+ plt.show()
+ 
+ 
+ *K-means clustering in scipy
+ from scipy.cluster.vq import kmeans, vq
+ from matplotlib import pyplot as plt
+ import seaborn as sns, pandas as pd
+ 
+ import random
+ random.seed((1000,2000))
+ 
+ x_coordinates = [89, 90, 65, 67, 33, 60]
+ y_coordinates = [22, 78, 89, 90, 80, 44]
+ 
+ df = pd.DataFrame({'x_coordinate' : x_coordinates, 'y_coordinate' : y coordinates})
+ 
+ centroids,_ = kmeans(df, 3)
+ df['cluster_labels'], _ = vq(df, centroids)
+ 
+ *Normalization of data
+ -> Process of rescaling data to a standard deviation of 1
+ x_new = x / std_dev(x)
+ 
+ from matplotlib import pyplot as plt
+ plt.plot(data, label = "original")
+ plt.plot(scaled_data, label = "scaled")
+ 
+ plt.legend()
+ plt.show()
+ 
+ *Standardize data using whiten() function
+ from scipy.cluster.vq import whiten
+ 
+ goals_for = [2, 4, 6, 7, 8, 9]
+ scaled_data = whiten(goals_for)
+ print(scaled_data)
+ 
+ 
+ *Creating a distance matrix using linkage
+ scipy.cluster.hierarchy.linkage(observations, method='single', metric='euclidean', optimal_ordering=False)
+ 
+ method : how to calculate the proximity of clusters
+ metric : distance metric
+ optimal_ordering : order data points
+ 
+ Which method to use ?
+ -> single : based on two closest objects
+ -> complete : based on two farthest objects
+ -> average : based on the arithmetic mean of all objects
+ -> centroid : based on the geometric mean of all objects
+ -> median : based on the median of all objects
+ -> ward : based on the sum of squares
+ 
+ *Creating cluster labels with fcluster
+ scipy.cluster.hierarchy.fcluster(distance_matrix, num_clusters, criterion)
+ 
+ distance_matrix : output of linkage() method
+ num_clusters : number of clusters
+ criterion : how to decide thresholds to form clusters
+ 
+ *Visualize clusters with matplotlib
+ from matplotlib import pyplot as plt
+ 
+ df = pd.DataFrame({'x': [2, 4, 5, 6, 7], 'y': [1, 1, 4, 5, 6], 'labels': ['A', 'B', 'A', 'A', 'B']})
+ df.plot.scatter(x='x', y='y', c=df['labels'].apply(lambda x: colors[x])
+ plt.show()
+ 
+ *Visualize clusters with seaborn
+ from matplotlib import pyplot as plt
+ import seaborn as sns
+ 
+ df = pd.DataFrame({'x': [2, 4, 5, 6, 7], 'y': [1, 1, 4, 5, 6], 'labels': ['A', 'B', 'A', 'A', 'B']})
+ sns.scatterplot(x='x', y='y', hue='labels', data=df)
+ plt.show()
+ 
+ *Create a dendrogram in SciPy
+ from scipy.cluster.hierarchy import dendrogram
+ 
+ Z = linkage(df[['x_whiten', 'y_whiten']], method = 'ward', metric = 'euclidean')
+ dn = dendrogram(Z)
+ plt.show()
+ 
+ *Measuring speed in hierarchial clustering
+ -> timeit module to check runtime of functions
+ -> Measure the speed of .linkage() method
+ -> Use randomly generated points
+ -> Run various iterations to extrapolate
+ 
+ *Use of timeit module
+ from scipy.cluster.hierarchy import linkage
+ import pandas as pd
+ import random, timeit
+ 
+ points = 100
+ df = pd.DataFrame({'x': random.sample(range(0, points), points), 'y': random.sample(range(0, points), points)})
+ %timeit linkage(df[['x', 'y']], method = 'ward', metric = 'euclidean')
+ 
+ *K-means clustering
+ 
+ Drawback of hierarchial clustering : runtime
+ -> k means runs significantly faster on large datasets
+ 
+ *STEP-1 : Generate cluster centers
+ kmeans(obs, k_or_guess, iter, thresh, check_finite)
+ obs : standardized observations
+ k_or_guess : number of clusters
+ iter : number of iterations(default : 20)
+ thres : threshold(default : 1e-05)
+ check_finite : whether to check if observations contain only finite numbers(default=True)
+ -> Returns two objects : cluster centers, distortion
+ 
+ *STEP-2: Generate cluster labels
+ vq(obs, code_book, check_finite=True)
+ obs : standardized observations
+ code_book : cluster centers
+ check_finite : whether to check if observations contain only finite numbers(default=True)
+ -> Returns two objects : a list of cluster labels, a list of distortions
+ 
+ -> k-means returns a single value of distortions
+ -> vq(Vector quantization) returns a list of distortions
+ 
+ *Running k-means
+ from scipy.cluster.vq import kmeans, vq
+ 
+ cluster_centers,_ = kmeans(df[['scaled_x', 'scaled_y']],3)
+ df['cluster_labels'],_ = vq(df[['scaled_x', 'scaled_y']],cluster_centers)
+ 
+ sns.scatterplot(x='scaled_x', y='scaled_y', hue='cluster_labels', data=df)
+ plt.show()
+ 
+ -> Distortion : sum of squared distances of points from cluster centers
+ -> Decreases with an increasing number of clusters
+ -> Becomes zero hen the number of clusters equals the number of points
+ -> Elbow plot : line plot between cluster centers and distortion
+ -> It helps to indicate the number of clusters present in data
+ 
+ *Elbow method in Python
+ distortions = []
+ num_clusters = range(2,7)
+ 
+ for i in num_clusters:
+     centroids, distortions = kmeans(df[['scaled_x', 'scaled_y']], i)
+     distortions.append(distortion)
+     
+ elbow_plot_data = pd.DataFrame({'num_clusters': num_clusters, 'distortions': distortion})
+ sns.lineplot(x='num_clusters', y='distortions', data = elbow_plot_data)
+ plt.show()
+ 
+ *Dominent colors in Images
+ -> All images consist of pixels
+ -> Each pixel has three values : Red, Green and Blue
+ -> Pixel color : combination of these RGB values
+ -> Perform k-means on standardized RGB to find cluster centers
+ -> Uses : identifying features in satellite images
+ 
+ -> Convert images to pixels : matplotlib.image.imread
+ -> Display colors of cluster centers : matplotlib.pyplot.imshow
+ 
+ *Convert image to RGB matrix
+ import matplotlib.image as img
+ mage = img.imread('sea.jpg')
+ image.shape
+ 
+ r=[]
+ g=[]
+ b=[]
+ 
+ for row in image:
+     for pixel in row:
+         temp_r, temp_g, temp_b = pixel
+         r.append(temp_r)
+         g.append(temp_g)
+         b.append(temp_b)
+         
+         
+*Find dominant colors
+cluster_centers,_ = kmeans(pixels[['scaled_red', 'scaled_blue', 'scaled_green']],2)
+
+colors = []
+
+r_std, g_std, b_std = pixels[['red', 'blue', 'green']].std()
+
+for cluster_center in cluster_centers :
+    scaled_r, scaled_g, scaled_b = cluster_centers
+    colors.append((scaled_r * r_std/255, scaled_g * g_std/255, scaled_b * b_std/255))
+  
+print(colors)
+plt.imshow([colors])
+plt.show()
+
+
+    
+ 
