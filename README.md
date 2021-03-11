@@ -3524,5 +3524,93 @@ print(error_updated)
 
 
 
+**CREATING A KERAS MODEL
+
+-> Model building steps:
+  - Specify architecture
+  - Compile
+  - Fit
+  - Predict
+
+-> Model specification:
+import numpy as np
+from keras.layers import Dense
+from keras.models import Sequential
+
+predictors = np.loadtxt('predictors_data.csv', delimiter=',')
+n_cols = predictors.shape[1]
+
+model = Sequential()
+model.add(Dense(100, activation='relu', input_shape = (n_cols,)))
+model.add(Dense(100, activation='relu'))
+model.add(Dense(1))
+
+-> Why you need to compile your model?
+- Specify the optimizer
+  1. Many options and mathematically complex
+  2. "Adam" is usually a good choice
+- Loss function
+  1. "mean_squared_error" common for regression
+
+Example:
+predictors = np.loadtxt('predictors_data.csv', delimiter=',')
+n_cols = predictors.shape[1]
+
+model = Sequential()
+model.add(Dense(100, activation='relu', input_shape = (n_cols,)))
+model.add(Dense(100, activation='relu'))
+model.add(Dense(1))
+model.compile(optimizer='adam', loss='mean_squared_error')
+
+-> Fitting a model
+- Applying backpropogation and gradient descent with your data to update the weights.
+- Scaling data before fitting can ease optimization.
+
+Example:
+predictors = np.loadtxt('predictors_data.csv', delimiter=',')
+n_cols = predictors.shape[1]
+
+model = Sequential()
+model.add(Dense(100, activation='relu', input_shape = (n_cols,)))
+model.add(Dense(100, activation='relu'))
+model.add(Dense(1))
+model.compile(optimizer='adam', loss='mean_squared_error')
+mpdel.fit(predictors, target)
+
+
+**Classification models
+
+-> 'categorical_crossentropy' loss function
+-> Similiar to log loss
+-> Add metrics = ['accuracy'] to compile step for easy-to-understand diagnostics.
+-> Output layer has separate node for each possible outcome, and uses 'softmax' activation.
+
+-> Code for Classification model:
+from keras.utils.np_utils import to_categorical
+
+data = pd.read_csv('basketball_shot_log.csv')
+predictors = data.drop(['shot_result'], axis=1).as_matrix()
+target = to_categorical(data.shot_result)
+
+model = Sequential()
+model.add(Dense(100, activation='relu', input_shape = (n_cols,)))
+model.add(Dense(100, activation='relu')
+model.add(Dense(100, activation='relu')
+model.add(Dense(2, activation='softmax')
+model.compile(optimizer = 'adam', loss ='categorical_crossentropy', metrics = ['accuracy'])
+model.fit(predictors, target)
+
+-> Using models:
+1. Save
+2. Reload
+3. Make predictions
+
+Example:
+from keras.models import load_model
+model.save('model_file.h5')
+my_model = my_model.predict(data_to_predict_with)
+probability_true = predictions[:,1]
+
+Verifying modle structure : my_model.summary()
 
 
