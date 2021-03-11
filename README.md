@@ -3614,3 +3614,30 @@ probability_true = predictions[:,1]
 Verifying modle structure : my_model.summary()
 
 
+-> Vanishing gradients: occurs when many layers have very small slopes(e.g due to being on flat part of tanh curve)
+-> In deep networks, updates to backprop were close to 0.
+
+*Validation in deep learning
+-> Commonly use validation split rather than cross-validation.
+-> Deep learning widely used on large datasets.
+-> Single validation score is based on large amount of data, and is reliable.
+
+-> Example of model validation:
+model.compile(optimizer = 'adam', loss = 'categorical_crossentropy', metrics = ['accuracy'])
+model.fit(predictors, target, validation_split = 0.3)
+
+**Early Stopping
+
+-> Early stopping is a method that allows you to specify an arbitrary large number of training epochs and stop training once the model performance stops improving on a hold out validation dataset.
+
+from keras.callbacks import EarlyStopping
+early_stopping_monitor = EarlyStopping(patience = 2)
+model.fit(predictors, target, validation_split = 0.3, nb_epoch = 20, callbacks = [early_stopping_monitor])
+
+
+-> Overfitting is a modeling error which occurs when a function is too closely fit to a limited set of data points. Underfitting refers to a model that can neither model the training data nor generalize to new data. Intuitively, underfitting occurs when the model or the algorithm does not fit the data well enough.
+
+-> Workflow for optimizing model capacity:
+1. Start with a small network.
+2. Gradually increase capacity.
+3. Keep increasing capacity until validation score is no longer improving.
