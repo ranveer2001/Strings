@@ -3451,7 +3451,7 @@ print(output)
 
 -> Gradient descent is a first-order iterative optimization algorithm for finding a local minimum of a differentiable function.
 
-*Grdaient descent steps
+*Gradient descent steps
 -> Start at random point
 -> Until you are somewhere flat:
   - Find the slope
@@ -3468,6 +3468,59 @@ print(output)
 -> Slope calculation example
 <img width="624" alt="Screen Shot 2021-03-10 at 7 41 28 PM" src="https://user-images.githubusercontent.com/77609240/110722836-9f45c180-81d8-11eb-8f82-aeb156df0fcc.png">
 
+-> Slope of mean-squared loss function w.r.t prediction:
+   -> 2(Predicted Value - Actual Value) = 2 Error
+   -> 2(-4) = -8
+   
+ -> Slope of loss:
+    -> 2 * -4 * 3 = -24
+    -> learning rate = 0.01
+    -> Updated weight = 2 - 0.01(-24) = 2.24
+    
+ 
+-> Code to calculate slopes and update weights:
+import umpy as np
+weights = np.array([1,2])
+input_data = np.array([3,4])
+target = 6
+learning_rate = 0.01
+preds = (weights * input_data).sum()
+error = preds - target
+print(error)
+
+gradient = 2 * input_data * error
+gradient
+
+weights_updated = weights - learning_rate * gradient
+preds = (weights * input_data).sum()
+error_updated = preds_updated - target
+print(error_updated)
+
+-> Backpropagation is a short form for "backward propagation of errors." It is a standard method of training artificial neural networks. This method helps to calculate the gradient of a loss function with respects to all the weights in the network.
+
+-> Backpropogation process:
+- Trying to estimate the slope of the loss function w.r.t each weight.
+- Do forward propogation to alculate predictions and errors.
+- Go back one layer at a time.
+- Gradients for weight is product of:
+  1. Node value feeding into that weight.
+  2. Slope of loss function w.r.t node it feeds into.
+  3. Slope of activation function at the node it feeds into.
+
+-> Backpropogation: Recap
+- Start at some random set of weights.
+- Use forward propogation to make a prediction.
+- Use backward propogation to calculate the slope of the loss function w.r.t each weight.
+- Multiply that slope by the learning rate, and subtract from the urrent weights.
+- Keep going with the cycle until we get to a flat part.
+
+-> Stochastic gradient descent: Stochastic gradient descent is an iterative method for optimizing an objective function with suitable smoothness properties. Advantages of using Stochastic Gradient Descent is that it does the calculations faster than gradient descent and batch gradient descent. However, gradient descent is the best approach if one wants a speedier result.
+   
+-> It is common to calculate slopes on only a subset of the data.
+-> Use a different batch of data to calculate the next update.
+-> Start over from the beginning once all data is used.
+-> Each time through the training data is called an epoch.
+-> When slopes are calculated on one batch at a time: stochastic gradient descent
 
 
 
