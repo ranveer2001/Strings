@@ -3400,6 +3400,76 @@ plt.show()
 
 
     
- 
+
+
+***DEEP LEARNDING IN PYTHON
+
+-> Deep learning uses especially powerful neural networks.
+-> A neural network is a series of algorithms that endeavors to recognize underlying relationships in a set of data through a process that mimics the way the human brain operates.
+-> A simple neural network has an input layer, hidden layer and output layer.
+
+-> Forward Propogation: Multiply-add process.
+                        Dot product.
+                        Forward propogation for one data point at at time.
+                        Output is the prediction for that data point.
+                        
+-> Forward Propogation code:
+import numpy as np
+input_data = np.array([2,3])
+weights = {'node_0': np.array([1, 1]), 'node_1': np.array([-1, 1]), 'output': np.array([2, -1])}
+node_0_value = (input_data * weights['node_0']).sum()
+node_1_value = (input_data * weights['node_1']).sum()
+hidden_layer_outputs = np.array([node_0_value, node_1_value])
+output = (hidden_layer_outputs * weights['output']).sum()
+print(output)
+
+-> Activation function allows the model to capture non-linearities.
+-> Activation functions applied to node inputs to produce node outputs.
+
+->The rectified linear activation function or ReLU for short is a piecewise linear function that will output the input directly if it is positive, otherwise, it will output zero.
+
+-> Activation function code:
+import numpy as np
+input_data = np.array([2,3])
+weights = {'node_0': np.array([1, 1]), 'node_1': np.array([-1, 1]), 'output': np.array([2, -1])}
+node_0_input = (input_data * weights['node_0']).sum()
+node_0_output = np.tanh(node_0_input) (can also use relu instead of np.tanh)
+node_1_input = (input_data * weights['node_1']).sum()
+node_1_output = np.tanh(node_1_input)
+hidden_layer_outputs = np.array([node_0_value, node_1_value])
+output = (hidden_layer_outputs * weights['output']).sum()
+print(output)
+
+
+*The need for optimization
+-> making accurate predictions get harder with more points.
+
+-> Loss function: Aggregates errors in predictions from many data points into single number.
+-> Measure of model's predictive performance.
+-> Lower loss function value means a better model.
+-> Use algorithm called Gradient descent.
+
+-> Gradient descent is a first-order iterative optimization algorithm for finding a local minimum of a differentiable function.
+
+*Grdaient descent steps
+-> Start at random point
+-> Until you are somewhere flat:
+  - Find the slope
+  - Take a step downhill
+
+-> If the slope is positive-
+  - Going opposite the slope means moving to lower numbers
+  - Subtract the slope from the current value
+  - Too big a step may lead us astray
+
+-> Solution : learning rate
+-> Update each weight by subtracting learning rate * slope
+
+-> Slope calculation example
+<img width="624" alt="Screen Shot 2021-03-10 at 7 41 28 PM" src="https://user-images.githubusercontent.com/77609240/110722836-9f45c180-81d8-11eb-8f82-aeb156df0fcc.png">
+
+
+
+
 
 
