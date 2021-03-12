@@ -3806,7 +3806,151 @@ color = tf.reshape(color, [2*2, 3])
 
 
 
+*Importing data for use in tensorflow
 
+-> Import data using pandas
+-> Convert data to numpy array
+-> Use in tensorflow without modification
+
+import numpy as np
+import pandas as pd
+
+housing = pd.read_csv('kc_housing.csv')
+housing = np.array(housing)
+
+
+-> Parameters of read_csv()
+   
+   Parameter                  Description                             Default
+1. filepath_or_buffer      Accepts a file path or URL                  None
+2. sep                     Delimiter between columns                    ,
+3. delim_whitespace        Boolean for whether to delimit whitespace   False
+4. encoding                Specifies encoding to be used if any        None
+
+-> Setting the data type using numpy and tensorflow approach
+
+1. housing = pd.read_csv('kc_housing.csv')
+   price = np.array(housing['price'], np.float32)
+   waterfront = np.array(housing['waterfront'], np.bool)
+   
+2. housing = pd.read_csv('kc_housing.csv')
+   price = tf.cast(housing['price'], tf.float32)
+   waterfront = tf.cast(housing['waterfront'], tf.bool)
+   
+ *LOSS FUNCTIONS
+ 
+ -> TensorFlow has operations for common loss functions
+ 1. Mean squared error(MSE)
+ 2. Mean absolute error(MAE)
+ 3. Huber error
+ -> Loss functions are accesible from:
+ 1. tf.keras.losses()
+ 2. tf.keras.losses.mse()
+ 3. tf.keras.losses.mae()
+ 4. tf.keras.losses.Huber()
+ 
+-> MSE
+ - Strongly penalizes outliers
+ - High sensitivity near minimum
+
+-> MAE
+ - Scales linearly with size of error
+ - Low sensitivity near minimum
+
+-> Huber
+ - Similiar to MSE near minimum
+ - Similiar to MAE away from minimum
+
+import tensorflow as tf
+
+loss = tf.keras.losses.mse(targets, predictions)
+
+-> Defining a loss function
+
+#Define a linear regression model
+def linear_regression(intercept, slope = slope, features = features):
+    return intercept + features*slope
+    
+#Define a loss function to compute the MSE
+def loss_function(intercept, slope, targets = targets, features = features):
+    predictions = linear_regression(intercept, slope)
+    return tf.keras.losses.mse(target, predictions)
+    
+#Compute the loss for test data inputs
+loss_function(intercept, slope, test_targets, test_features)
+
+#Compute the loss for default data inputs
+loss_function(intercept, slope)
+
+
+*LINEAR REGRESSION in TenserFlow
+
+price = np.array(housing['price'], np.float32)
+size = np.array(housing['sqft_living'], np.float32)
+
+intercept = tf.Variable(0.1, np.float32)
+slope = tf.Variable(0.1, np.float32)
+
+def linear_regression(intercept, slope = slope, features = size):
+    return intercept + features*slope
+    
+def loss_function(intercept, slope, targets = price, features = size):
+    predictions = linear_regression(intercept, slope)
+    return tf.keras.losses.mse(target, predictions)
+    
+#define an optimization operation
+opt = tf.keras.optimizers.Adam()
+
+#Minimize the loss function and print the loss
+for j in range(1000):
+    opt.minimize(lambda: loss_function(intercept, slope), var_list = [intercept, slope])
+    print(loss_function(intercept, slope))
+    
+#Print the trained parameters
+print(intercept.numpy(), slope.numpy())
+
+
+*Batch training
+
+-> 'chunksize' parameter provides batch size
+
+import pandas as pd
+import numpy as np
+
+for batch in pd.read_csv('kc_housing.csv', chunksize = 100)
+    price = np.array(batch['price'], np.float32)
+    size = np.array(batch['size'], np.float32)
+    
+-> Training a linear model in batches 
+
+import pandas as pd
+import numpy as np
+import tensorflow as tf
+
+intercept = tf.Variable(0.1, tf.float32)
+slope = tf.Variable(0.1, tf.float32)
+
+def linear_regression(intercept, slope, features):
+    return intercept + features*slope
+    
+def loss_function(intercept, slope, targets, features):
+    predictions = linear_regression(intercept, slope)
+    return tf.keras.losses.mse(target, predictions)
+    
+opt = tf.keras.optimizers.Adam() 
+
+for batch in pd.read_csv('kc_housing.csv', chunksize = 100)
+    price_batch = np.array(batch['price'], np.float32)
+    size_batch = np.array(batch['size'], np.float32)
+    
+opt.minimize(lambda: loss_function(intercept, slope), var_list = [intercept, slope])
+print(intercept.numpy(), slope.numpy())
+
+
+
+
+ 
+   
 
 
 
