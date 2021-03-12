@@ -3641,3 +3641,177 @@ model.fit(predictors, target, validation_split = 0.3, nb_epoch = 20, callbacks =
 1. Start with a small network.
 2. Gradually increase capacity.
 3. Keep increasing capacity until validation score is no longer improving.
+
+
+
+
+**INTRODUCTION TO TENSORFLOW IN PYTHON
+
+-> Tensorflow is an open-source library for graph-based numerical computation.
+-> Used for addition, multiplication, differentiation, train machine learning models.
+
+-> Tensor is a generalization of vectors and matrices.
+-> A collection of numbers arranged in a particular shape.
+
+-> Defining tensors in TensorFlow
+   import tensorflow as tf
+   
+   d0 = tf.ones((1,)) #O-dimension tensor
+   d1 = tf.ones((2,))
+   d2 = tf.ones((2, 2))
+   d3 = tf.ones((2, 2, 2))
+   
+   print(d3.numpy())
+   
+-> A constant is the simplest category of tensor.
+-> Not trainable, can have only one dimension.
+
+  from tensorflow import constant
+  
+  a = constant(3, shape=[2,3])  #define a 2x3 constant
+  
+  b = constant([1,2,3,4], shape=[2,2]) #define a 2x2 constant
+  
+-> Defining and initializing variables
+
+   import tensorflow as tf
+   
+   #Define a variable
+   a0 = tf.Variable([1,2,3,4,5,6], dtype=tf.float32)
+   a1 = tf.Variable([1,2,3,4,5,6], dtype=tf.int16)
+   
+   #Define a constant
+   b = tf.constant(2, tf.float32)
+   
+   #Compute their product
+   c0 = tf.multiply(a0,b)
+   c1 = a0*b
+   
+   
+*Basic operations
+
+-> Addition operation
+
+from tensorflow import constant, add
+
+#define 0-dimensional tensors
+A0 = constant([1])
+B0 = constant([1])
+
+#define 1-dimensional tensors
+A1 = constant([1, 2])
+B1 = constant([3, 4])
+
+#define 2-dimensional tensors
+A2 = constant([1, 2], [3, 4])
+B2 = constant([5, 6], [7, 8])
+
+#Perform tensor addition with add()
+C0 = add(A0, B0)
+C1 = add(A1, B1)
+C2 = add(A2, B2)
+
+-> The add() operation performs element-wise addition with two tensors.
+-> Element-wise addition requires both tensors to have the same shape.
+
+-> Element-wise multiplication performed using multiply() operation.
+-> Matrix multiplication performed with matmul() operator.
+-> The matmul(A,B) operation multiplies A by B.
+-> Number of columns of A must be equal to number of rows of B.
+
+-> Multiplication operation
+
+from tensorflow import ones, matmul, multiply
+
+#define tensors
+A0 = ones(1)
+A31 = ones([3, 1])
+A34 = ones([3, 4])
+A43 = ones([4, 3])
+
+- Valid operations:
+1. multiply(A0,A0)
+2. multiply(A31,A31)
+3. multiply(A43,A43)
+4. matmul(A43,A34)
+5. not valid: matmul(A43,A43)
+
+-> Summing over tensor dimensions
+- The reduce_sum() operator sums over the dimensions of a tensor.
+- reduce_sum(A) sums over all dimensions of A
+- reduce_sum(A, i) sums over dimension i
+
+from tensorflow import ones, reduce_sum
+
+#define a 2x3x4 tensor of ones
+A = ones([2,3,4])
+
+#sum over all dimensions
+B = reduce_sum(A)
+
+#Sum over dimensions 0, 1 and 2
+B0 = reduce_sum(A, 0)
+B1 = reduce_sum(A, 1)
+B2 = reduce_sum(A, 2)
+
+*Advanced operations
+
+-> gradient(): computes the slope of a function at a point
+-> reshape(): reshapes a tensor(e.g 10x10 to 100x1)
+-> random(): generates a tensor out of randomly drawn values
+
+-> Finding the optimum:
+1. Minimum: Lowest value of a loss function.
+2. Maximum: Highest value of objective function.
+-> Do this using gradient() operation
+1. Optimum: Find a point where gradient = 0.
+2. Minimum: Change in gradient > 0.
+3. Maximum: Change in gradient < 0.
+
+-> Gradients in TensorFlow
+
+import tensorflow as tf
+
+#Define x
+x = tf.Variable(-1.0)
+
+#Define y within instance of GradientTape
+with tf.GradientTape() as tape:
+     tape.watch(x)
+     y = tf.multiply(x, x)
+     
+#Evaluate the gradient of y at x = -1
+g = tape.gradient(y, x)
+print(g.numpy())
+
+-> How to reshape a grayscale image
+
+import tensorflow as tf
+
+#generate grayscale image
+gray = tf.random.uniform([2,2], maxval = 255, dtype='int32')
+
+#Reshape grayscale image
+gray = tf.reshape(gray, [2*2, 1])
+
+-> how to reshape a color image
+
+import tensorflow as tf
+
+#generate color image
+color = tf.random.uniform([2,2,3], maxval = 255, dtype='int32')
+
+#Reshape color image
+color = tf.reshape(color, [2*2, 3])
+
+
+
+
+
+
+
+
+
+
+   
+
