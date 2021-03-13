@@ -4095,7 +4095,144 @@ output = tf.keras.layers.Dense(4, activation='softmax')(dense2)
    
    
 
-   
+*Building a sequential model
+
+from tensorflow import keras
+
+model = keras.Sequential()
+
+#define first hidden layer
+model.add(keras.layers.Dense(16, activation='relu', input_shape=(28*28)))
+
+#define second hidden layer
+model.add(keras.layers.Dense(8, activation='relu')
+
+#define output layer
+model.add(keras.layers.Dense(4, activation='softmax')
+
+#compile the model
+model.compile('adam', loss='categorical_crossentropy')
+
+#summarize the model
+print(model.summary())
+
+
+*Building a functional API
+
+import tensorflow as tf
+
+#define model 1 input layer shape
+model1_inputs = tf.keras.Input(shape=(28*28,))
+
+#define model 2 input layer shape
+model2_inputs = tf.keras.Input(shape=(10,))
+
+#define layer 1 for model 1
+model1_layer1 = tf.keras.layers.Dense(12, activation='relu')(model1_inputs)
+
+#define layer 2 for model 1
+model1_layer2 = tf.keras.layers.Dense(4, activation='softmax')(model1_layer1)
+
+#define layer 1 for model 2
+model2_layer1 = tf.keras.layers.Dense(8, activation='relu')(model2_inputs)
+
+#define layer 2 for model 2
+model2_layer2 = tf.keras.layers.Dense(4, activation='softmax')(model2_layer1)
+
+#merge model 1 and model 2
+merged = tf.keras.layers.add([model1_layer2, model2_layer2])
+
+#define a functional model
+model = tf.keras.Model(inputs=[model1_inputs, model2_inputs], outputs=merged)
+
+#compile the model
+model.compile('adam', loss='categorical_crossentropy')
+
+*Training and Validation with keras
+
+import tensorflow as tf
+
+model = tf.keras.Sequential()
+
+#define the hidden layer
+model.add(tf.keras.layers.Dense(16, activation='relu', input_shape=(784,)))
+
+#define the output layer
+model.add(tf.keras.layers.Dense(4, activation='softmax'))
+
+#compile the model
+model.compile('adam', loss='categorical_crossentropy')
+
+#train model
+model.fit(image_features, image_labels)
+
+
+-> Changing the metric
+
+#Recompile the model with the accuracy metric
+model.compile('adam', loss='categorical_crossentropy', metrics=['accuracy'])
+
+#Train model with validation split
+model.fit(features, labels, epochs=10, validation_split=0.20)
+
+
+*Training models with the Estimators API
+
+- High-level Tensorflow APIs: Estimators
+- Mid-level Tensorflow APIs: layers, datsets, metrics
+- Low-level Tensorflow APIs: Python
+
+-> Estimators API are less fexible as it enforces best practices by placing restrictions on model architecture and training.
+-> It allows for faster deployment. Also, many premade models.
+
+-> Model specifcation and training:
+   1. Define feature columns
+   2. Load and transform data
+   3. Define an estimator
+   4. Apply train operation
+
+1. Defining feature columns
+
+import tensorflow as tf
+
+#define a numeric feature column
+size = tf.feature_column.numeric_column("size")
+
+#define a categorical feature column
+rooms = tf.feature_column.categorical_column_with_vocabulary_list("rooms", ["1","2","3","4","5"])
+
+features_list = [size, rooms]
+
+features_list = [tf.feature_column.numeric_column('image', shape=(784,))]
+
+
+2. Loading and transforming data
+
+#define input data function
+def input_fn():
+    #define feature dictionary
+    features = {"size":[1340, 1690, 2720],"rooms":[1, 3, 5]}
+    #define labels
+    labels = [293838, 744004, 829003]
+    return features, labels
+    
+    
+3./4. Define and train a regression estimator
+
+#define a deep neural network regression
+model0 = tf.estimator.DNNRegressor(feature_columns = feature_list, hidden_units = [10, 6, 6, 3])
+
+#train the regression model
+model0.train(input_fn, steps=20)
+
+-> Define and train a deep neural network
+
+#define a deep neural network classifier
+model1 = tf.estimator.DNNClassifier(feature_columns = feature_list, hidden_units = [32, 16, 8], n_classes=4)
+
+#train the classifier
+model1.train(input_fn, steps=20)
+
 
 
 
