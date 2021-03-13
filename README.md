@@ -3948,9 +3948,156 @@ print(intercept.numpy(), slope.numpy())
 
 
 
-
+*DENSE LAYERS
+-> A dense layer applies weights to all nodes from the previous layer.
  
+  import tenserflow as tf
+  
+  #define inputs(features)
+  inputs = tf.constant([[1, 35]])
+  
+  #define weights
+  weights = tf.Variable([[-0.05],[-0.01]])
+  
+  #define bias
+  bias = tf.Variable([0.5])
+  
+  #multiply inputs by the weights
+  product = tf.matmul(inputs, weights)
+  
+  #define dense layer
+  dense = tf.keras.activations.sigmoid(product+bias)
+  
+-> Defining a complete model
+  
+  import tensorflow as tf
+  
+  #define input layer
+  inputs = tf.constant(data, tf.float32)
+  
+  #define first dense layer
+  dense1 = tf.keras.layers.Dense(10, activation='sigmoid')(inputs)
+  
+  #define second dense layer
+  dense2 = tf.keras.layers.Dense(5, activation='sigmoid')(dense1)
+  
+  #define output(predictions) layer
+  outputs = tf.keras.layers.Dense(1, activation='sigmoid')(dense2)
+  
+  -> High-level approach
+     - high-level API operations
+     - dense = keras.layers.Dense(10, activation='sigmoid')
+
+  -> Low-level approach
+     - Linear-algebraic operations
+     - prod = matmul(inputs, weights)
+     - dense = keras.activations.sigmoid(prod)
+
+
+-> Compenents of a typical hidden layer:
+   - Linear: Matrix Multiplication
+   - Nonlinear: Activation function
+
+-> Sigmoid activation function
+   - Primarily, used in outputs of binary classification.
+   - Low-level: tf.keras.activations.sigmoid()
+   - High-level: sigmoid
+
+-> The relu activation function
+   - Used for hidden layers.
+   - Low-level: tf.keras.activations.relu()
+   - High-level: relu
+
+-> The softmax activation function
+   - Used in output layers in classification problems having more than 2 classes.
+   - Low-level: tf.keras.activations.softmax()
+   - High-level: softmax
+
+*Activation functions in neural networks
+
+import tensorflow as tf
+
+#define input layer
+inputs = tf.constant(borrower_features, tf.float32)
+
+#define dense layer 1
+dense1 = tf.keras.layers.Dense(16, activation='relu')(inputs)
+
+#define dense layer 2
+dense1 = tf.keras.layers.Dense(8, activation='sigmoid')(dense1)
+
+#define output layer
+output = tf.keras.layers.Dense(4, activation='softmax')(dense2)
+
+*Optimizers
+
+-> The gradient descent optimizer
+  - Stochastic gradient descent(SGD) optimizer
+  - tf.keras.optimizers.SGD()
+  - learning_rate
+  - simple and easy to interpret
+
+-> The RMS propogation optimizer
+  - Root mean squared propogration optimizer
+  - tf.keras.optimizers.RMSprop()
+  - learning_rate
+  - momentum
+  - decay
+  - Allows for momentum to both build and decay
+
+-> The adam optimizer
+  - Adaptive moment(adam) optimizer
+  - tf.keras.optimizers.Adam()
+  - learning_rate
+  - beta1
+  - Performs well with default parameter values
+
+*Initialising variables in TensorFlow
+
+-> Low-level approach
+
+  import tensorflow as tf
+  
+  #define 500x500 random normal variable
+  weights = tf.Variable(tf.random.normal([500, 500]))
+  
+  #define 500x500 truncated random normal variable
+  weights = tf.Variable(tf.random.truncated_normal([500, 500]))
+  
+  
+-> High-level approach
+
+   #define a dense layer with the default initializer
+   dense = tf.keras.layers.Dense(32, activation='relu')
    
+   #define a dense layer with the zeros initializer
+   dense = tf.keras.layers.Dense(32, activation='relu', kernel_initializer='zeros')
+   
+*Implementing dropout in a network
+
+   import numpy as np
+   import tensorflow as tf
+   
+   #define input data
+   inputs = np.array(borrower_features, np.float32)
+   
+   #define dense layer 1
+   dense1 = tf.keras.layers.Dense(32, activation='relu')(inputs)
+   
+   #define dense layer 2
+   dense2 = tf.keras.layers.Dense(16, activation='relu')(dense1)
+   
+   #Apply dropout operation
+   dropout1 = tf.keras.layers.Dropout(0.25)(dense2)
+   
+   #define output layer
+   outputs = tf.keras.layers.Dense(1, activation='sigmoid')(dropout1)
+   
+   
+
+   
+
+
 
 
 
