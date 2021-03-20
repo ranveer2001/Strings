@@ -4235,7 +4235,86 @@ model1.train(input_fn, steps=20)
 
 
 
+***INRODUCTION TO PYTORCH
 
+-> PyTorch is an open source machine learning library used for developing and training neural network based deep learning models.
+
+import torch
+torch.tensor([[2,3,5], [1,2,9]])
+
+torch.rand(2,2) (random matrix of 2x2)
+
+a = torch.rand((3,5))
+a.shape
+
+*Matrix multiplication
+a = torch.rand((2,2))
+b = torch.rand((2,2))
+
+torch.matmul(a,b)
+
+*Zeros
+a_torch = torch.zeros(2,2)
+
+Ans: tensor([[0., 0.],[0., 0.]])
+
+*Ones
+b_torch = torch.ones(2,2)
+
+Ans: tensor([[1., 1.],[1., 1.]])
+
+*Eye
+c_torch = torch.eye(2)
+
+Ans: tensor([[1., 0.],[0., 1.]])
+
+*Forward Propogation
+-> Pytorch implementation
+
+import torch
+
+a = torch.Tensor([2])
+b = torch.Tensor([-4])
+c = torch.Tensor([-2])
+d = torch.Tensor([2])
+
+e = a + b
+f = c * d
+
+g = e * f
+print(e, f, g)
+
+*Backpropogation in PyTorch
+
+import torch
+
+x = torch.tensor(-3., requires_grad = True)
+y = torch.tensor(5., requires_grad = True)
+z = torch.tensor(-2., requires_grad = True)
+
+q = x + y
+f = q * z
+
+f.backward()
+
+print("Gradient of z is: " + str(z.grad))
+print("Gradient of y is: " + str(z.grad))
+print("Gradient of x is: " + str(z.grad))
+
+
+*Fully connected neural networks
+
+import torch
+
+input_layer = torch.rand(10)
+
+w1 = torch.rand(10, 20)
+w2 = torch.rand(20, 20)
+w3 = torch.rand(20, 4)
+h1 = torch.matmul(input_layer, w1)
+h2 = torch.matmul(h1, w2)
+output_layer = torch.matmul(h2, w3)
+print(output_layer)
 
 
 
