@@ -4319,6 +4319,98 @@ print(output_layer)
 
 
 
+**ACTIVATION FUNCTIONS
+
+*Matrix multiplication is a linear transformation
+input_layer = torch.tensor([2., 1.])
+weight_1 = torch.tensor([[0.45, 0.32], [-0.12, 0.29]])
+weight_2 = torch.tensor([[0.45, 0.34], [-0.19, 0.77]])
+weight = torch.matmul(weight_1, weight_2)
+output_layer = torch.matmul(input_layer, weight)
+print(output_layer)
+print(weight)
+
+*RelU activation functions
+
+import torch.nn as nn
+relu = nn.ReLU()
+
+tensor_1 = torch.tensor([2., -4.])
+print(relu(tensor_1))
+
+tensor_2 = torch.tensor([[2., -4.],[1.2, 0.]])
+print(relu(tensor_2))
+
+*CROSS ENTROPY LOSS IN PYTORCH
+
+logits = torch.tensor([[3.2, 5.1, -1.7]])
+ground_truth = torch.tensor([0])
+criterion = nn.CrossEntropyLoss()
+
+loss = criterion(logits, ground_truth)
+print(loss)
+
+
+*Preparing dataset in Pytorch
+
+# Transform the data to torch tensors and normalize it 
+transform = transforms.Compose([transforms.ToTensor(),transforms.Normalize((0.1307), ((0.3081)))])
+
+# Prepare the datasets
+trainset = torchvision.datasets.MNIST('mnist', train=True, download=True, transform=transform)
+testset = torchvision.datasets.MNIST('mnist', train=False, download=True, transform=transform)
+
+# Prepare the dataloaders
+trainloader = torch.utils.data.DataLoader(trainset, batch_size=32, shuffle=True, num_workers=0)
+testloader = torch.utils.data.DataLoader(testset, batch_size=32, shuffle=False, num_workers=0)  
+
+# Compute the shape of the training set and testing set
+trainset_shape = trainloader.dataset.train_data.shape
+testset_shape = testloader.dataset.test_data.shape
+
+# Print the computed shapes
+print(trainset_shape, testset_shape)
+
+# Compute the size of the minibatch for training set and testing set
+trainset_batchsize = trainloader.batch_size
+testset_batchsize = testloader.batch_size
+
+# Print sizes of the minibatch
+print(trainset_batchsize, testset_batchsize)
+
 
    
+*Building a neural network
 
+# Define the class Net
+class Net(nn.Module):
+    def __init__(self):    
+    	# Define all the parameters of the net
+        super(Net, self).__init__()
+        self.fc1 = nn.Linear(28 * 28 * 1, 200)
+        self.fc2 = nn.Linear(200, 10)
+
+   def forward(self, x):    
+    	# Do the forward pass
+        x = F.relu(self.fc1(x))
+        x = self.fc2(x)
+        return x
+        
+# Instantiate the network, the Adam optimizer and Cross-Entropy loss function
+model = Net()   
+optimizer = optim.Adam(model.parameters(), lr=3e-4)
+criterion = nn.CrossEntropyLoss()
+
+for batch_idx, data_target in enumerate(train_loader):
+    data = data_target[0]
+    target = data_target[1]
+    data = data.view(-1, 28 * 28)
+    optimizer.zero_grad()
+
+   # Complete a forward pass
+   output = model(data)
+
+   # Compute the loss, gradients and change the weights
+   loss = criterion(output, target)
+   loss.backward()
+   optimizer.step()
