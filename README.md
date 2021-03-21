@@ -4414,3 +4414,123 @@ for batch_idx, data_target in enumerate(train_loader):
    loss = criterion(output, target)
    loss.backward()
    optimizer.step()
+   
+   
+*Convolution operator
+
+# Create 10 random images of shape (1, 28, 28)
+images = torch.rand(10, 1, 28, 28)
+
+# Build 6 conv. filters
+conv_filters = torch.nn.Conv2d(in_channels=1, out_channels=6, kernel_size=3, stride=1, padding=1)
+
+# Convolve the image with the filters
+output_feature = conv_filters(images)
+print(output_feature.shape)
+
+-> 
+# Create 10 random images
+image = torch.rand(10, 1, 28, 28)
+
+# Create 6 filters
+filters = torch.rand(6, 1, 3, 3)
+
+# Convolve the image with the filters
+output_feature = F.conv2d(image, filters, stride=1, padding=1)
+print(output_feature.shape)
+
+*Max-pooling operator
+
+# Build a pooling operator with size `2`.
+max_pooling = torch.nn.MaxPool2d(2)
+
+# Apply the pooling operator
+output_feature = max_pooling(im)
+
+# Use pooling operator in the image
+output_feature_F = F.max_pool2d(im, 2)
+
+# print the results of both cases
+print(output_feature)
+print(output_feature_F)
+
+-> Average-pooling operator
+
+# Build a pooling operator with size `2`.
+avg_pooling = torch.nn.AvgPool2d(2)
+
+# Apply the pooling operator
+output_feature = avg_pooling(im)
+
+# Use pooling operator in the image
+output_feature_F = F.avg_pool2d(im, 2)
+
+# print the results of both cases
+print(output_feature)
+print(output_feature_F)
+
+**CONVOLUTIONAL NEURAL NETWORKS(CNN)
+
+class Net(nn.Module):
+    def __init__(self):
+        super(Net, self).__init__()
+        
+        # Instantiate two convolutional layers
+        self.conv1 = nn.Conv2d(in_channels=1, out_channels=5, kernel_size=3, padding=1)
+        self.conv2 = nn.Conv2d(in_channels=5, out_channels=10, kernel_size=3, padding=1)
+        
+        # Instantiate the ReLU nonlinearity
+        self.relu = nn.ReLU()
+        
+        # Instantiate a max pooling layer
+        self.pool = nn.MaxPool2d(2, 2)
+        
+        # Instantiate a fully connected layer
+        self.fc = nn.Linear(7 * 7 * 10, 10)
+        
+*Training CNNs
+
+for i, data in enumerate(train_loader, 0):
+    inputs, labels = data
+    optimizer.zero_grad()
+
+    # Compute the forward pass
+    outputs = net(inputs)
+        
+    # Compute the loss function
+    loss = criterion(outputs, labels)
+        
+    # Compute the gradients
+    loss.backward()
+        
+    # Update the weights
+    optimizer.step()
+    
+*Using CNNs to make predictions
+
+# Iterate over the data in the test_loader
+for i, data in enumerate(test_loader):
+
+    # Get the image and label from data
+    image, label = data
+
+    # Make a forward pass in the net with your image
+    output = net(image)
+
+    # Argmax the results of the net
+    _, predicted = torch.max(output.data, 1)
+    if predicted == label:
+        print("Yipes, your net made the right prediction " + str(predicted))
+    else:
+        print("Your net prediction was " + str(predicted) + ", but the correct label is: " + str(label))
+        
+*L2-regularization
+
+model = Net()
+
+# Instantiate the cross-entropy loss
+criterion = nn.CrossEntropyLoss()
+
+# Instantiate the Adam optimizer
+optimizer = optim.Adam(model.parameters(), lr=3e-4, weight_decay=0.001)
+
