@@ -4534,3 +4534,164 @@ criterion = nn.CrossEntropyLoss()
 # Instantiate the Adam optimizer
 optimizer = optim.Adam(model.parameters(), lr=3e-4, weight_decay=0.001)
 
+
+
+***IMAGE PROCESSING 
+
+-> It helps to enhance an image.
+-> Extract useful information.
+-> Analyze it and make decisions.
+
+-> Scikit-image is an image processing library in python
+-> RGB channels - Red, Green, Blue
+-> Gray-scaled images just have black and white color.
+
+*Converting RGB to gray-scale and vice-versa
+
+from skimage import color
+grayscale = color.rgb2gray(original)
+rgb = color.gray2rgb(grayscale)
+
+# Import the modules from skimage
+from skimage import data, color
+
+# Load the rocket image
+rocket = data.rocket()
+
+# Convert the image to grayscale
+gray_scaled_rocket = color.rgb2gray(rocket) 
+
+# Show the original image
+show_image(rocket, 'Original RGB image')
+
+# Show the grayscale image
+show_image(gray_scaled_rocket, 'Grayscale image')
+
+*Colors with numpy
+
+# Obtaining the red-values of the image
+red = image[:, :, 0]
+
+# Obtaining the green-values of the image
+green = image[:, :, 1]
+
+# Obtaining the blue-values of the image
+blue = image[:, :, 2]
+
+# Display them using the gray color map
+
+plt.imshow(red, cmpa="gray")
+plt.title('Red')
+plt.axis('off')
+plt.show()
+
+
+*Shapes
+
+# Accessing the shapes of the images
+madrid_image.shape
+>> (426, 640, 3) means 426 pixels high and 640 pixels wide and has 3 layers for color representation.
+
+*Flipping images: Vertically
+
+# Flip the image in up direction
+vertically_flipped = np.flipud(madrid_image)
+show_image(vertically_flipped, 'vertically flipped image')
+
+*Flipping images: Horizontally
+
+# Flip the image in left direction
+horizontally_flipped = np.fliplr(madrid_image)
+show_image(horizontally_flipped, 'horizontally flipped image')
+
+
+*Histograms in Matplotlib
+
+# Red color of the image
+red = image[:, :, 0]
+
+# Obtain the red histogram
+plt.hist(red.ravel(), bins=256)
+
+plt.title('Red histogram')
+plt.show()
+
+
+*Thresholding
+-> Partitioning an image into a foreground and background by making it black and white.
+
+-> We do so by setting each pixel to:
+   - 255(white) if pixel > thresh value
+   - 0(black) if pixel < thresh value
+
+*Applying threshold:
+
+# Obtain the optimal threshold value
+thresh = 127
+
+# Apply thresholding to the image
+binary = image > thresh
+
+# Show the original and thresholded
+show_image(image, 'Original')
+show_image(binary, 'Thresholded')
+
+*Inverted Thresholding:
+
+# Obtain the optimal threshold value
+thresh = 127
+
+# Apply thresholding to the image
+inverted_binary = image <= thresh
+
+# Show the original and thresholded
+show_image(image, 'Original')
+show_image(inverted_binary, 'Inverted thresholded')
+
+# Try thresholding algorithms
+from skimage.filters import try_all_threshold
+
+# Obtain all the resulting images
+fig, ax = try_all_threshold(image, verbose = False)
+
+# Showing resulting plots
+show_plot(fig, ax)
+
+*Optimal Thresh value, Global thresholding, for uniform background
+
+# Import the otsu threshold function
+from skimage.filters import threshold.otsu
+
+# Obtain the optimal threshold value
+thresh = threshold_otsu(image)
+
+# Apply thresholding to the image
+binary_global = image > thresh
+
+# Show the original and thresholded image
+show_image(image, 'Original')
+show_image(binary_global, 'Global thresholding')
+
+*Optimal Thresh value, Local thresholding, for uneven background
+
+# Import the local threshold function
+from skimage.filters import threshold_local
+
+# Set the black size to 35
+block_size = 35
+
+# Obtain the optimal local thresholding
+local_thresh = threshold_local(text_mining, block_size, offset=10)
+
+# Apply local thresholding and obtain the binary image
+binary_local = text_image > local_thresh
+
+# Show the original and thresholded image
+show_image(image, 'Original')
+show_image(binary_global, 'Local thresholding')
+
+
+
+
+
+
