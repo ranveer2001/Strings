@@ -4872,5 +4872,174 @@ plot_comparison(image_horse, dilated_image, 'Erosion')
 
 
 
+**IMAGE RESTORATION
+
+-> Used for:
+1) Fixing damaged images
+2) Text removing
+3) Logo removing
+4) Object removing
+
+-> Inpainting: Reconstructing lost parts of images and looking at non-damaged regions
+
+from skimage.restoration import inpaint
+
+# Obtain the mask
+mask = get_mask(defect_image)
+
+# Apply inpainting to the damaged image using the mask
+restored_image = inpaint.inpaint_biharmonic(defect_image, mask, multichannel=True)
+
+show_image(defect_image, 'Image to restore')
+show_image(restored_image, 'Image restored')
+
+
+**NOISE
+
+*Apply noise in scikit-learn
+from skimage.utils import random_noise
+
+# Add noise to the image
+noisy_image = random_image(dog_image)
+
+show_image(dog_image)
+show_image(noisy_image, 'Noisy image')
+
+-> Denoising types:
+1) Total variation(TV)
+2) Bilateral
+
+* Denoising using total variation filter 
+
+from skimage.restoration import denoise_tv_chambolle
+
+# Apply total variation filter denoising
+denoised_image = denoise_tv_chambolle(noisy_image, weight=0.1, multichannel=True)
+
+show_image(noisy_image, 'Noisy image')
+show_image(denoised_image, 'Denoised image')
+
+* Denoising using Bilateral filter
+
+from skimage.restoration import denoise_bilateral
+
+# Apply bilateral filter denoising
+denoised_image = denoise_bilateral(noisy_image, multichannel=True)
+
+show_image(noisy_image, 'Noisy image')
+show_image(denoised_image, 'Denoised image')
+
+
+*UNSUPERVISED SEGMENTATION(SLIC)
+
+from skimage.segmentation import slic
+from skimage.color import label2rgb
+
+# Obtain the segments
+segments = slic(image) (For more segments use a parameter: n_segments = 300)
+
+# Put segments on top of original image to compare
+segmented_image = label2rgb(segments, image, kind='avg')
+
+show_image(image)
+show_image(segmented_image, "Segmented image")
+
+
+**FINDING CONTOURS
+
+* Find contours using scikit-learn
+(Preparing the image)
+
+# Make the image grayscale
+image = color.rgb2gray(image)
+
+(Now, binarize the image)
+
+# Obtain the thresh value
+thresh = threshold_otsu(image)
+
+# Apply threshold
+thresholded_image = image > thresh
+
+(Then, use find_contours())
+
+# Import the measure module
+from skimage import measure
+
+# Find contours at a constant value of 0.8
+contours = measure.find_contours(thresholded_image, 0.8)
+
+
+
+**DETECTING EDGES WITH CANNY
+
+from skimage.feature import canny
+
+# Convert image to grayscale
+coins = color.rgb2gray(coins)
+
+# Apply Canny detector
+canny_edges = canny(coins)
+
+show_image(canny_edges, "Edges with canny")
+
+*Canny edge detector
+-> The Canny edge detector is an edge detection operator that uses a multi-stage algorithm to detect a wide range of edges in images.
+
+# Apply canny detector with a sigma of 0.5
+canny_edges_0_5 = canny(coins, sigma=0.5)
+
+# Show resulted images with edges
+show_image(canny_edges, "Sigma of 1")
+show_image(anny_edges_0_5, "Sigma of 0.5")
+
+
+**Harris corner detector
+
+-> Harris Corner Detector is a corner detection operator that is commonly used in computer vision algorithms to extract corners and infer features of an image.
+
+from skimage.feature import corner_harris
+
+# Convert image to grayscale
+image = rgb2gray(image)
+
+# Apply the harris corner detector on the image
+measure_image = corner_harris(image)
+
+show_image(measure_image)
+
+# Find the coordinated of the corners
+coords = corner_peaks(corner_harris(image), min_distance=5)
+
+print("A total of", len(coords), "corners were detected.")
+
+show_image_with_detected_corners(image, coords)
+
+
+**FACE DETECTION
+
+from skimage.feature import Cascade
+
+# Load the trained file from the module root
+trained_file = data.lbp_frontal_face_cascade_filename()
+
+# Initialize the detector cascade
+detector = Cascade(trained_file)
+
+# Apply detector on the image
+detected = detector.detect_scale(img=image, scale_factor=1.2, step_ratio=1, min_size=(10,10), max_size=(200,200))
+
+print(detected)
+show_detected_face(image, detected)
+
+
+
+
+
+
+
+
+
+
 
 
