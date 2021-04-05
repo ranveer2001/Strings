@@ -4692,6 +4692,185 @@ show_image(binary_global, 'Local thresholding')
 
 
 
+**FILTERS
+
+-> Used for enhancing an image
+-> Emphasize or remove features
+-> Smoothing
+-> Sharpening
+-> Edge detection
+
+*Edge detection
+(Sobel is edge detection algorithm)
+
+# Import module and function
+
+(Need to make the image grayscaled first to use sobel algorithm)
+from skimage.filters import sobel
+# Apply edge detection filter
+edge_sobel = sobel(image_coins)
+
+# Show original and resulting image to compare
+plot_comparison(image_coins, edge_sobel, "Edge with Sobel")
+
+
+*Gaussian smoothing
+
+# Import module and function
+from skimage.filters import gaussian
+
+# Apply edge detection filter
+gaussian_image = gaussian(amsterdam_pic, multichannel=True) (True when picture is colored)
+
+# Show original and resulting image to compare
+plot_comparison(amsterdam_pic, gaussian_image, "Blurred with gaussian filter")
+
+
+*Contrast enhancement
+
+-> Contrast Enhancement refers to the sharpening of image features to remove the noisy feature such as edges and contrast boundaries. Contrast Enhancement Algorithms aim to improve the perception of the image by human eye.
+
+-> Types of Contrast enhancement algorithms:
+1) Histogram Equalization: Histogram equalization is an image processing technique that adjusts image intensities to improve contrast.
+2) Adaptive Histogram Equilization: Adaptive Histogram Equalization computes many histograms for each of the separate part of the image, and uses them to redistribute the lightness values of the image, hence it differs from Histogram Equalization. Hence it is suitable for bettering the local contrast in images.
+*Contrast Limited Adaptive Histogram Equalization(CLAHE) is a variant of Adaptive Histogram Equalization. CLAHE has one additional step over Adaptive Histogram Equalization and that is clipping of the histogram.
+3) Contrast stretching: In Contrast Stretching the contrast in an image is stretched from the range of intensity values it contains to span a desired range of values. 
+It is also called Normalization.Some Contrast Stretching techniques include: Minimum-Maximum, Percentage, and Piecewise Contrast Enhancement.
+
+*Histogram Equilization
+
+from skimage import exposure
+
+# Obtain the equalized image
+image_eq = exposure.equalize_hist(image)
+
+# Show original and result
+show_image(image, 'Original')
+show_image(image_eq, 'Histogram equalized')
+
+
+*CLAHE
+
+from skimage import exposure
+
+# Apply adaptive Equilization
+image_adapteq = exposure.equalize_adapthist(image, clip_limit=0.03) (clip limit between 0 and 1 and more value gives more contrast)
+
+# Show original and result
+show_image(image, 'Original')
+show_image(image_adapteq, 'Adaptive equalized')
+
+
+**TRANSFORMATIONS
+
+*Rotating an image 
+
+from skimage.transform import rotate
+
+# Rotate the image 90 degrees clockwise
+image_rotated = rotate(image, -90)
+
+show_image(image, 'Original')
+show_image(image_adapteq, 'Rotated 90 degrees clockwise')
+
+# Rotate the image 90 degrees anticlockwise
+image_rotated = rotate(image, 90)
+
+show_image(image, 'Original')
+show_image(image_adapteq, 'Rotated 90 degrees anticlockwise')
+
+
+*Rescaling
+-> Downgrading an image
+
+from skimage.transform import rescale
+
+# Rescale the image to be 4 times smaller
+image_rescaled = rescale(image, 1/4, anti_aliasing=True, multichannel=True)
+
+show_image(image, 'Original')
+show_image(image_adapteq, 'Rescaled image')
+
+(aliasing makes an image look like it has waves or ripples, this happens due to poor pixalation of the image)
+
+
+*Resizing
+
+from skimage.transform import resize
+
+# Height and width to resize
+height = 400
+width = 500
+
+# Resize image
+image_resized = resize(image, (height,width), anti_aliasing=True)
+
+# Show the original and resulting images
+show_image(image, 'Original')
+show_image(image_adapteq, 'Resized image')
+
+
+*Resizing proportionally
+
+from skimage.transform import resize
+
+# Set proportional height so its 4 times its size
+height = image.shape[0]/4
+width = image.shape[1]/4
+
+# Resize image
+image_resized = resize(image, (height,width), anti_aliasing=True))
+
+show_image(image_adapteq, 'Resized image')
+
+
+**MORPHOLOGY
+
+-> Morphological image processing is a collection of non-linear operations related to the shape or morphology of features in an image, such as boundaries, skeletons, etc
+
+-> Morphological filters:
+1) Better for binary images
+2) Can extend for grayscale
+
+-> Morphological operations:
+1) Dilation - It adds pixels to the boundaries of an object in an image
+2) Erosion - Removes pixels on object boundaries
+
+*Shapes in scikit-learn
+
+from skimage import morphology
+
+square = morphology.rectangle(4,2)
+>> [[1,1]
+    [1,1]
+    [1,1]
+    [1,1]]
+    
+*Erosion in scikit-learn
+
+from skimage import morphology
+
+# Set structuring element to the rectangular-shaped
+selem = rectangle(12,6)
+
+# Obtain the erosed image with binary erosion
+eroded_image = morphology.binary_erosion(image_horse, selem=selem)
+
+# Show result
+plot_comparision(image_horse, eroded_image, 'Erosion')
+
+
+*Dilation in scikit-learn
+
+from skimage import morphology
+
+# Obtain dilated image, using binary dilation
+dilated_image = morphology.binary_dilation(image_horse)
+
+# See results
+plot_comparison(image_horse, dilated_image, 'Erosion')
+
+
 
 
 
