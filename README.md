@@ -5034,6 +5034,195 @@ show_detected_face(image, detected)
 
 
 
+**Image data
+
+*Loading Image
+-> imageio: read and save images
+-> Image objects are NumPy arrays
+
+# Import ImageIO
+import imageio
+
+# Load "chest-220.dcm"
+im = imageio.imread('chest-220.dcm')
+
+# Print image attributes
+print('Image type:', type(im))
+print('Shape of image array:', im.shape)
+
+*Metadata
+-> The who, what, when, where and how of image acquisition.
+im.meta
+
+# Import ImageIO
+import imageio
+im = imageio.imread('chest-220.dcm')
+
+# Print the available metadata fields
+print(im.meta.keys())
+
+*Plotting images
+-> Matplotlib's imshow() function displays 2D images data
+
+import matplotlib as plt
+plt.imshow(im, cmap='gray')
+plt.axis('off')
+-> Axis ticks and labels re often not useful for images
+
+
+**N-dimensional images
+
+-> Standard grayscale inages
+   im[row, col]
+-> 3-D volumetric images
+   vol[pln, row, col]
+-> Color images are also 3-D
+   im[row, col, ch]
+-> Time-series data
+   im_ts[time, row, col, ch]
+
+*Create 3-D volume from a few 2-D images
+
+import imageio
+import numpy as np
+
+im1 = imageio.imread('xyz')
+im2 = imageio.imread('ayz')
+im3 = imageio.imread('gyz')
+
+im1.shape
+(512, 512)
+
+vol = np.stack([im1, im2, im3])
+vol.shape
+(3, 512, 512)
+
+-> Loading Volume directly : imageio.volread() used for reading multi-dimensional data directly
+
+
+*Plotting multiple images at once
+
+-> plt.subplots: creates a figure canvas with multiple AxesSubplots objects
+
+import imageio
+vol = imageio.volread('chest-data')
+fig, axes = plt.subplots(nrows=1, ncols=3)
+axes[0].imshow(vol[0],cmap='gray')
+axes[1].imshow(vol[0],cmap='gray')
+axes[2].imshow(vol[0],cmap='gray')
+for ax in axes:
+    ax.axis('off')
+plt.show()
+
+*Modifying the aspect ratio
+
+im = vol[:, :, 100]
+d0, d1, d2 = vol.meta['sampling']
+d0, d1, d2
+
+asp = d0/d1
+asp
+
+plt.imshow(im, cmap='gray', aspect=asp)
+plt.show()
+
+
+**Separate histograms
+
+# Create histograms for selected pixels
+hist1 = ndi.histogram(vol, min=0, max=255, bins=256)
+hist2 = ndi.histogram(vol, 0, 255, 256, labels=labels)
+hist3 = ndi.histogram(vol, 0, 255, 256, labels=labels, index=1)
+
+# Plot the histogram density
+plt.plot(hist1 / hist1.sum(), label='All pixels')
+plt.plot(hist2 / hist2.sum(), label='All labeled pixels')
+plt.plot(hist3 / hist3.sum(), label='Left ventricle')
+format_and_render_plot()
+
+
+*Pinpoint center of masses
+
+# Extract centers of mass for objects 1 and 2
+coms = ndi.center_of_mass(vol, labels, index=[1,2])
+print('Label 1 center:', coms[0])
+print('Label 2 center:', coms[1])
+
+# Add marks to plot
+for c0, c1, c2 in coms:
+    plt.scatter(c2, c1, s=100, marker='o')
+plt.show()
+
+*Summarize the time series
+
+# Create an empty time series
+ts = np.zeros(20)
+
+# Calculate volume at each voxel
+d0, d1, d2, d3 = vol_ts.meta['sampling']
+dvoxel = d1 * d2 * d3
+
+# Loop over the labeled arrays
+for t in range(20):
+    nvoxels = ndi.sum(1, labels[t], index=1)
+    ts[t] = nvoxels * dvoxel
+
+# Plot the data
+plt.plot(ts)
+format_and_render_plot()
+
+*translations
+
+# Find image center of mass
+com = ndi.center_of_mass(im)
+
+# Calculate amount of shift needed
+d0 = 128 - com[0]
+d1 = 128 - com[1]
+
+# Translate the brain towards the center
+xfm = ndi.shift(im, shift=(d0, d1))
+
+*Rotations
+
+# Shift the image towards the center
+xfm = ndi.shift(im, shift=(-20, -20))
+
+# Rotate the shifted image
+xfm = ndi.rotate(xfm, angle=-30, reshape=False)
+
+# Plot the original and transformed images
+fig, axes = plt.subplots(2, 1)
+axes[0].imshow(im)
+axes[1].imshow(xfm)
+format_and_render_plot()
+
+*Mean-absolute error
+
+# Calculate image difference
+err = im1 - im2
+
+# Plot the difference
+plt.imshow(err, cmap='seismic', vmin=-200, vmax=200)
+format_and_render_plot()
+
+# Calculate absolute image difference
+abs_err = np.abs(im1 - im2)
+
+# Plot the difference
+plt.imshow(abs_err, cmap='seismic', vmin=-200, vmax=200)
+format_and_render_plot()
+
+# Calculate mean absolute error
+mean_abs_err = np.mean(np.abs(im1 - im2))
+print('MAE:', mean_abs_err)
+
+
+
+
+
+
+
 
 
 
