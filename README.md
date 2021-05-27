@@ -5219,9 +5219,159 @@ print('MAE:', mean_abs_err)
 
 
 
+## R PROGRAMMING
+      
+Addition: +
+Subtraction: -
+Multiplication: *
+Division: /
+Exponentiation: ^
+Modulo: %%
+The last two might need some explaining:
 
+The ^ operator raises the number to its left to the power of the number to its right: for example 3^2 is 9.
+The modulo returns the remainder of the division of the number to the left by the number on its right, for example 5 modulo 3 or 5 %% 3 is 2.
+      
+In R, you create a vector with the combine function c(). You place the vector elements separated by a comma between the parentheses. For example:
 
+numeric_vector <- c(1, 2, 3)
+character_vector <- c("a", "b", "c")
+      
+You can give a name to the elements of a vector with the names() function. Have a look at this example:
 
+some_vector <- c("John Doe", "poker player")
+names(some_vector) <- c("Name", "Profession")
+      
+It is important to know that if you sum two vectors in R, it takes the element-wise sum. For example, the following three statements are completely equivalent:
+
+c(1, 2, 3) + c(4, 5, 6)
+c(1 + 4, 2 + 5, 3 + 6)
+c(5, 7, 9)
+      
+A function that helps you to answer this question is sum(). It calculates the sum of all elements of a vector. For example, to calculate the total amount of money you have lost/won with poker you do:
+
+total_poker <- sum(poker_vector)
+               
+For example, to select the first element of the vector, you type poker_vector[1]. To select the second element of the vector, you type poker_vector[2], etc. Notice that the first element in a vector has index 1, not 0 as in many other programming languages.
+               
+For example: suppose you want to select the first and the fifth day of the week: use the vector c(1, 5) between the square brackets. For example, the code below selects the first and fifth element of poker_vector:
+
+poker_vector[c(1, 5)]
+               
+So, another way to find the mid-week results is poker_vector[2:4]. Notice how the vector 2:4 is placed between the square brackets to select element 2 up to 4.
+
+poker_vector["Monday"]
+will select the first element of poker_vector since "Monday" is the name of that first element.
+
+Just like you did in the previous exercise with numerics, you can also use the element names to select multiple elements, for example:
+
+You can construct a matrix in R with the matrix() function. Consider the following example:
+
+matrix(1:9, byrow = TRUE, nrow = 3)
+In the matrix() function:
+
+The first argument is the collection of elements that R will arrange into the rows and columns of the matrix. Here, we use 1:9 which is a shortcut for c(1, 2, 3, 4, 5, 6, 7, 8, 9).
+The argument byrow indicates that the matrix is filled by the rows. If we want the matrix to be filled by the columns, we just place byrow = FALSE.
+The third argument nrow indicates that the matrix should have three rows.
+               
+Use c(new_hope, empire_strikes, return_jedi) to combine the three vectors into one vector. Call this vector box_office.
+               
+In R, the function rowSums() conveniently calculates the totals for each row of a matrix. This function creates a new vector:
+
+rowSums(my_matrix)
+              
+You can add a column or multiple columns to a matrix with the cbind() function, which merges matrices and/or vectors together by column. For example:
+
+big_matrix <- cbind(matrix1, matrix2, vector1 ...)
+      
+Just like every action has a reaction, every cbind() has an rbind()
+      
+Just like cbind() has rbind(), colSums() has rowSums()
+      
+my_matrix[1,2] selects the element at the first row and second column.
+my_matrix[1:3,2:4] results in a matrix with the data on the rows 1, 2, 3 and columns 2, 3, 4.
+If you want to select all elements of a row or a column, no number is needed before or after the comma, respectively:
+
+my_matrix[,1] selects all elements of the first column.
+my_matrix[1,] selects all elements of the first row.
+      
+Just like 2 * my_matrix multiplied every element of my_matrix by two, my_matrix1 * my_matrix2 creates a matrix where each element is the product of the corresponding elements in my_matrix1 and my_matrix2.
+
+After looking at the result of the previous exercise, big boss Lucas points out that the ticket prices went up over time. He asks to redo the analysis based on the prices you can find in ticket_prices_matrix (source: imagination).
+
+Those who are familiar with matrices should note that this is not the standard matrix multiplication for which you should use %*% in R.
+      
+The function factor() will encode the vector as a factor:
+
+factor_sex_vector <- factor(sex_vector)
+                     
+When you first get a data set, you will often notice that it contains factors with specific factor levels. However, sometimes you will want to change the names of these levels for clarity or other reasons. R allows you to do this with the function levels():
+
+levels(factor_vector) <- c("name1", "name2",...)
+      
+After finishing this course, one of your favorite functions in R will be summary(). This will give you a quick overview of the contents of a variable:
+
+summary(my_var)
+      
+By default, the function factor() transforms speed_vector into an unordered factor. To create an ordered factor, you have to add two additional arguments: ordered and levels.
+
+factor(some_vector,
+       ordered = TRUE,
+       levels = c("lev1", "lev2" ...))
+By setting the argument ordered to TRUE in the function factor(), you indicate that the factor is ordered. With the argument levels you give the values of the factor in the correct order.
+      
+Well, the function head() enables you to show the first observations of a data frame. Similarly, the function tail() prints out the last observations in your data set.
+
+Both head() and tail() print a top line called the 'header', which contains the names of the different variables in your data set.
+      
+The function str() shows you the structure of your data set. For a data frame it tells you:
+
+The total number of observations (e.g. 32 car types)
+The total number of variables (e.g. 11 car features)
+A full list of the variables names (e.g. mpg, cyl … )
+The data type of each variable (e.g. num)
+The first observations
+      
+You construct a data frame with the data.frame() function
+      
+You will often want to select an entire column, namely one specific variable from a data frame. If you want to select all elements of the variable diameter, for example, both of these will do the trick:
+
+planets_df[,3]
+planets_df[,"diameter"]
+However, there is a short-cut. If your columns have names, you can use the $ sign:
+
+planets_df$diameter
+      
+Now, let us move up one level and use the function subset(). You should see the subset() function as a short-cut to do exactly the same as what you did in the previous exercises.
+
+subset(my_df, subset = some_condition)
+The first argument of subset() specifies the data set for which you want a subset. By adding the second argument, you give R the necessary information and conditions to select the correct subset.
+      
+In data analysis you can sort your data according to a certain variable in the data set. In R, this is done with the help of the function order().
+
+order() is a function that gives you the ranked position of each element when it is applied on a variable, such as a vector for example:
+
+a <- c(100, 10, 1000)
+order(a)
+[1] 2 1 3
+     
+Let us create our first list! To construct a list you use the function list():
+
+my_list <- list(comp1, comp2 ...)
+      
+ If you want to name your lists after you've created them, you can use the names() function as you did with vectors. The following commands are fully equivalent to the assignment above:
+
+my_list <- list(your_comp1, your_comp2)
+names(my_list) <- c("name1", "name2")
+      
+shining_list <- list(moviename = mov, actors = act, reviews = rev)
+                
+You can also refer to the names of the components, with [[ ]] or with the $ sign. Both will select the data frame representing the reviews:
+
+shining_list[["reviews"]]
+shining_list$reviews
+                
+                
 
 
 
