@@ -5371,9 +5371,19 @@ You can also refer to the names of the components, with [[ ]] or with the $ sign
 shining_list[["reviews"]]
 shining_list$reviews
                 
+#Logical operators
+& checks all the elements whereas && just checks the first element and gives the answer.                
                 
-
-
+#if statement
+ if(condition) {expr
+  }
+                
+ #else statement
+ if(condition) {expr1
+  }
+ else {
+  expr2}
+                
 
 
 
