@@ -5384,11 +5384,44 @@ shining_list$reviews
  else {
   expr2}
                 
+#while statement
+while(condition) {
+   expr
+    }
+ 
+counter <- 1
+while(counter <= 7){
+      print(paste("counter is set to", counter))
+      counter <- counter + 1
+  }
+      
+#for loop - concise, easy to read, but no access to looping index
+ for(var in seq) { 
+      expr
+  }
+ 
+ cities <- c("New York", "Paris", "London", "Tokyo")
+            
+ for(city in cities) {
+     print(city)
+  }
+    
+ break statement breaks the loop when condition is met whereas next statement jumps to next element when a condition is matched ignoring the matched element.
+           
+ #Another way to use for loop - harder to read and write, but more versatile
+           
+  for(i in 1:length(cities)) { 
+      print(paste(cities[i], "is on position", i, "in the cities vector."))
+  }
+      
+  #Call functions in R
+           
+  sd(c(1,5,6,7))
+  2.629956        
 
-
-
-
-
-
-
+  values <- c(1,5,6,7)
+  sd(values)
+  2.629956
+      
+  
 
