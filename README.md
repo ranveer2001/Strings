@@ -5423,5 +5423,85 @@ while(counter <= 7){
   sd(values)
   2.629956
       
-  
+  #Triple function
+      
+  my_func <- function(a,b) {
+             a*b + a/b
+           }
+  my_func(4,2)
+  > 10
+      
+# Create a function pow_two()
+pow_two <- function(x) {
+  x ^ 2
+}
 
+# Use the function
+pow_two(12)
+
+# Create a function sum_abs()
+sum_abs <- function(x, y) {
+  abs(x) + abs(y)
+}
+
+# Use the function
+sum_abs(-2, 3)
+
+# Define the function hello()
+hello <- function() {
+  print("Hi there!")
+  TRUE
+}
+
+# Call the function hello()
+hello()
+ 
+# Finish the pow_two() function
+pow_two <- function(x, print_info = TRUE) {
+  y <- x ^ 2
+  if (print_info) {
+    print(paste(x, "to the power two equals", y))
+  }
+  return(y)
+}
+
+# Some calls of the pow_two() function
+pow_two(5)
+pow_two(5, FALSE)
+pow_two(5, TRUE)
+       
+# The linkedin and facebook vectors have already been created for you
+
+# Define the interpret function
+interpret <- function(num_views) {
+  if (num_views > 15) {
+      print("You're popular!")
+      num_views
+  } else {
+         print("Try to be more visible!")
+         0
+  }
+}
+
+# Call the interpret function twice
+interpret(linkedin[1])
+interpret(facebook[2])
+      
+#Install packages
+ install.packages("ggvis")
+      
+#Load packages
+ library("ggvis")
+   
+require() also helps in loading R packages.
+load package = attach to search list.
+      
+# Load the ggplot2 package
+library("ggplot2")
+
+# Retry the qplot() function
+qplot(mtcars$wt, mtcars$hp)
+
+# Check out the currently attached packages again
+search()
+      
