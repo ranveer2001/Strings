@@ -1,7 +1,6 @@
 **PYTHON COMPLETE MASTERCLASS FOR BEGINNERS**
 
-
-**STRINGS
+#STRINGS
 
 A string in Python is a sequence of characters. Strings are immutable and hence once defined, the content cannont be modified/changed in any way.
 Example : welcome = : "Hello Python"
@@ -5505,3 +5504,17 @@ qplot(mtcars$wt, mtcars$hp)
 # Check out the currently attached packages again
 search()
       
+
+ #lapply()
+ -> apply function over list or vector
+ -> output = list
+      
+ #sapply()
+ -> apply function over list or vector
+ -> try to simplify list to array
+      
+ #vapply()
+ -> apply function over list or vector
+ -> explicitly specify output format
+      
+ 
