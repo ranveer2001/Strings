@@ -5518,3 +5518,19 @@ search()
  -> explicitly specify output format
       
  
+#The gapminder dataset
+ -> Loading packages
+    library(gapminder)
+    library(dplyr)
+      
+#Arrange verb
+ -> arrange() sorts a table based on a variable.
+      
+#Mutate verb
+ -> mutate() changes or adds variable.
+      
+#Summarize verb
+ -> summarize() turns many rows into one.
+      
+#Group_by verb
+ -> group_by() before summarize() turns groups into one row each.
