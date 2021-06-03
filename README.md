@@ -5534,3 +5534,14 @@ search()
       
 #Group_by verb
  -> group_by() before summarize() turns groups into one row each.
+      
+#Count verb
+ counties %>%
+     count(state, sort = TRUE) -> sorted from the most common observation to the least
+ -> To add weight
+      counties %>%
+     count(state,wt = population, sort = TRUE)
+      
+#Transmute verb
+ -> Combination of select and mutate
+ -> Returns a subset of columns that are transformed and changed
