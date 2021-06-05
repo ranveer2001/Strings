@@ -5545,3 +5545,21 @@ search()
 #Transmute verb
  -> Combination of select and mutate
  -> Returns a subset of columns that are transformed and changed
+      
+#Types of aethetics
+  1) x : x-axis position
+  2) y : y-axis position
+  3) fill : fill color
+  4) color : color of points
+  5) size : area or radius of points
+  6) alpha : transparency
+  7) linetype : line dash pattern
+  8) labels : text on a plot or axes
+  9) shape : shape
+      
+theme_gray() is the default.
+theme_bw() is useful when you use transparency.
+theme_classic() is more traditional.
+theme_void() removes everything but the data.
+      
+      
