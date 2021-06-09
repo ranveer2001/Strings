@@ -5563,3 +5563,10 @@ theme_classic() is more traditional.
 theme_void() removes everything but the data.
       
       
+#Data.table
+      
+-> Three ways of creating data.table:
+1) data.table()
+2) as.data.table()
+3) fread()
+      
