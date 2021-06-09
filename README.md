@@ -5570,3 +5570,9 @@ theme_void() removes everything but the data.
 2) as.data.table()
 3) fread()
       
+-> uniqueN() is a helper function that returns an integer value containing the number of unique values in the input object.
+-> .SD is a special symbol which stands for subset of data.
+      x[, print(.SD), by = id]
+      
+-> .SDcols holds the columns that should be included in .SD
+      
