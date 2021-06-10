@@ -5576,3 +5576,10 @@ theme_void() removes everything but the data.
       
 -> .SDcols holds the columns that should be included in .SD
       
+#Fast data reading with fread()
+-> Fast and parallel file reader.
+-> Arg nThread controls the number of threads to use.
+      
+-> The colClasses argument of fread() allows you to explicitly specify the class of the columns. You can specify the class of the columns as a character vector (as is done in base R functions such as read.csv()):
+
+colClasses = c("integer", rep("factor", 3), "character")
